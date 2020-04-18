@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#5665BD92"
-    tools:context=".ui.notifications.PantryFragment">
+    tools:context=".ui.pantry.PantryFragment">
 
 
     <LinearLayout
@@ -29,6 +29,11 @@
             android:textColor="#1E1E1E"
             android:textSize="35dp"
             android:textStyle="bold" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recyclerView2"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
 
 
     </LinearLayout>

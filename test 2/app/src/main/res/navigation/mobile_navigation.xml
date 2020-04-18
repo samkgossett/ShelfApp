@@ -19,7 +19,7 @@
 
     <fragment
         android:id="@+id/navigation_pantry"
-        android:name="com.example.gossettsamantha.test.ui.notifications.PantryFragment"
+        android:name="com.example.gossettsamantha.test.ui.pantry.PantryFragment"
         android:label="@string/title_pantry"
         tools:layout="@layout/fragment_pantry" />
 

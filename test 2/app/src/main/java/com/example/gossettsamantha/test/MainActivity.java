@@ -51,7 +51,7 @@ public class MainActivity extends AppCompatActivity {
         Toast.makeText(MainActivity.this, "recipe page for item " + image3.getId() + " will pop up.",Toast.LENGTH_SHORT).show();
     }
 */
-
+/*
     public void recRec(View view) {
         Toast.makeText(MainActivity.this, "recommended recipes page will pop up.",Toast.LENGTH_SHORT).show();
     }
@@ -68,11 +68,16 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
-    public void yourRec(View view) {
+
+ */
+    public void yourRec(View v) {
         Toast.makeText(MainActivity.this, "Recipe page for this item will pop up.",Toast.LENGTH_SHORT).show();
 
+
+
+        }
     }
 
 
 
-}
+

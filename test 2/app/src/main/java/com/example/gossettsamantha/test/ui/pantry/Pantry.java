@@ -1,4 +1,4 @@
-package com.example.gossettsamantha.test.ui.notifications;
+package com.example.gossettsamantha.test.ui.pantry;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;

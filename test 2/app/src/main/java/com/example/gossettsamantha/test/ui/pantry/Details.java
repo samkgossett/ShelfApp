@@ -1,4 +1,5 @@
-package com.example.gossettsamantha.test.ui.notifications;
+package com.example.gossettsamantha.test.ui.pantry;
+
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -19,7 +20,6 @@ public class Details extends AppCompatActivity {
 
         Intent i = getIntent();
         String title = i.getStringExtra("title");
-
         textTitle = findViewById(R.id.detailTitle);
         textTitle.setText(title);
 
