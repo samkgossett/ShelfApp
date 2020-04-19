@@ -25,22 +25,30 @@ public class myAdapter extends RecyclerView.Adapter<myAdapter.ViewHolder> {
 
     private ArrayList<MyListItem> data;
     private Context context;
-    private OnNoteListener mOnNoteListener;
 
+    private OnItemClickListener mListener;
 
-    public myAdapter(Context context, ArrayList<MyListItem> data, OnNoteListener onNoteListener){
+    public interface OnItemClickListener {
+
+        void onItemClick(int position);
+    }
+
+    public void setOnItemClickListener(OnItemClickListener listener) {
+        mListener = listener;
+    }
+
+    public myAdapter(Context context, ArrayList<MyListItem> data) {
         this.layoutInflater = LayoutInflater.from(context);
-        this.context= context;
+        this.context = context;
         this.data = data;
-        this.mOnNoteListener = onNoteListener;
     }
 
 
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
-        View view = layoutInflater.inflate(R.layout.custom_view,viewGroup,false);
-        return new ViewHolder(view, mOnNoteListener);
+        View view = layoutInflater.inflate(R.layout.custom_view, viewGroup, false);
+        return new ViewHolder(view, mListener);
     }
 
     @Override
@@ -50,10 +58,10 @@ public class myAdapter extends RecyclerView.Adapter<myAdapter.ViewHolder> {
         viewHolder.textTitle.setText(title.getName());
 
         MyListItem description = data.get(i);
-        viewHolder.textDescription.setText( description.getDesc());
+        viewHolder.textDescription.setText(description.getDesc());
 
         MyListItem image = data.get(i);
-        viewHolder.imageView.setImageResource(image.getImageView() );
+        viewHolder.imageView.setImageResource(image.getImageView());
 
 
     }
@@ -63,38 +71,31 @@ public class myAdapter extends RecyclerView.Adapter<myAdapter.ViewHolder> {
         return data.size();
     }
 
-    public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
+    public static class ViewHolder extends RecyclerView.ViewHolder {
 
-        TextView textTitle,textDescription;
+        TextView textTitle, textDescription;
         ImageView imageView;
-        OnNoteListener onNoteListener;
 
-
-
-        public ViewHolder(@NonNull View itemView, OnNoteListener onNoteListener) {
+        public ViewHolder(@NonNull View itemView, final OnItemClickListener listener) {
             super(itemView);
 
             textTitle = itemView.findViewById(R.id.textTitle);
             textDescription = itemView.findViewById(R.id.textDesc);
             imageView = itemView.findViewById(R.id.imageView);
 
-            this.onNoteListener = onNoteListener;
 
-            //Toast.makeText(itemView.getContext(), "view holder " , Toast.LENGTH_SHORT).show();
-            itemView.setOnClickListener(this);
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
 
+
+                            listener.onItemClick(getAdapterPosition());
+
+                }
+
+            });
         }
 
-        @Override
-        public void onClick(View view) {
-            Log.d(TAG, "onClick " + getAdapterPosition());
-            Toast.makeText(view.getContext(), "onClick " , Toast.LENGTH_SHORT).show();
-            onNoteListener.onNoteClick(getAdapterPosition());
-        }
-    }
-
-    public interface OnNoteListener{
-        void onNoteClick(int position);
     }
 }
 

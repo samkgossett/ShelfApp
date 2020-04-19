@@ -16,19 +16,20 @@ import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.gossettsamantha.test.MainActivity;
 import com.example.gossettsamantha.test.R;
 
 import java.util.ArrayList;
 
-public class HomeFragment extends Fragment implements
-        myAdapter.OnNoteListener {
+public class HomeFragment extends Fragment  {
 
     private HomeViewModel homeViewModel;
+    private ArrayList<MyListItem> list;
+    private RecyclerView recyclerView;
+    private myAdapter adapter;
+    private LinearLayoutManager linearLayoutManager;
     private SQLiteDatabase db;
     private Cursor cursor;
-    RecyclerView recyclerView;
-    private ArrayList<MyListItem> list;
-    myAdapter adapter;
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater,
@@ -42,12 +43,11 @@ public class HomeFragment extends Fragment implements
 
         SQLiteOpenHelper recipeDatabaseHelper = new RecipeDatabaseHelper(getContext());
         db = recipeDatabaseHelper.getReadableDatabase();
-        ArrayList<MyListItem> list = new ArrayList();
+        final ArrayList<MyListItem> list = new ArrayList();
 
         String[] thisTitle = new String[20];
         String[] thisMatch = new String[20];
         int[] thisPicture = new int[20];
-
 
         cursor = db.query("DRINK",
                 new String[]{"_id", "NAME", "MATCH_PERCENTAGE", "IMAGE_RESOURCE_ID"},
@@ -70,14 +70,30 @@ public class HomeFragment extends Fragment implements
                 list.add(items);
                 i++;
             }
-            while (cursor.moveToNext()) ;
+            while (cursor.moveToNext());
+
             cursor.close();
         }
 
-        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
+        linearLayoutManager = new LinearLayoutManager(getContext());
+        adapter = new myAdapter(getContext(), list);
         recyclerView.setLayoutManager(linearLayoutManager);
-        adapter = new myAdapter(getContext(), list, this);
         recyclerView.setAdapter(adapter);
+
+        adapter.setOnItemClickListener(new myAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(int position) {
+                Toast.makeText(getContext(), "Recipe page for this item will pop up." + position,Toast.LENGTH_SHORT).show();
+
+                Intent intent = new Intent(getContext(), RecipeActivity.class);
+                intent.putExtra(RecipeActivity.EXTRA_RECIPEID, position);
+                startActivity(intent);
+
+            }
+        });
+
+
+
         return root;
 
     }
@@ -88,15 +104,6 @@ public class HomeFragment extends Fragment implements
         cursor.close();
         db.close();
     }
-
-    @Override
-    public void onNoteClick(int position) {
-        Toast.makeText(getContext(), "Recipe page for this item will pop up.",Toast.LENGTH_SHORT).show();
-        Intent intent = new Intent(getContext(), RecipeActivity.class);
-        intent.putExtra(RecipeActivity.EXTRA_RECIPEID, list.get(position));
-        startActivity(intent);
-    }
-
 
 
 }
