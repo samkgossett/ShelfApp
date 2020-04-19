@@ -20,7 +20,6 @@ public class PantryFragment extends Fragment {
     private Pantry pantry;
 
     RecyclerView recyclerView;
-    Adapter adapter;
     ArrayList<String> items;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
@@ -28,19 +27,6 @@ public class PantryFragment extends Fragment {
         pantry =
                 ViewModelProviders.of(this).get(Pantry.class);
         View root = inflater.inflate(R.layout.fragment_pantry, container, false);
-
-                items = new ArrayList<>();
-                items.add("First CardView Item");
-                items.add("Second CardView Item");
-                items.add("Third CardView Item");
-                items.add("Fourth CardView Item");
-                items.add("Fifth CardView Item");
-                items.add("Sixth CardView Item");
-
-                recyclerView = root.findViewById(R.id.recyclerView);
-                recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-                adapter = new Adapter(getActivity(),items);
-                recyclerView.setAdapter(adapter);
 
         return root;
     }

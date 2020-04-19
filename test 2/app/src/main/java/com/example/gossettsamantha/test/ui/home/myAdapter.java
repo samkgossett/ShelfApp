@@ -43,7 +43,6 @@ public class myAdapter extends RecyclerView.Adapter<myAdapter.ViewHolder> {
         this.data = data;
     }
 
-
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
@@ -62,7 +61,6 @@ public class myAdapter extends RecyclerView.Adapter<myAdapter.ViewHolder> {
 
         MyListItem image = data.get(i);
         viewHolder.imageView.setImageResource(image.getImageView());
-
 
     }
 
@@ -87,8 +85,6 @@ public class myAdapter extends RecyclerView.Adapter<myAdapter.ViewHolder> {
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-
-
                             listener.onItemClick(getAdapterPosition());
 
                 }
