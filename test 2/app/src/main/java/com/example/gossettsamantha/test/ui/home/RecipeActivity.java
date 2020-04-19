@@ -20,6 +20,10 @@ import java.util.List;
 
 public class RecipeActivity extends Activity {
     public static final String EXTRA_RECIPEID = "recipeId";
+    public static final String EXTRA_RECIPENAME = "name";
+    public static final String EXTRA_RECIPEDESC = "desc" ;
+    public static final String EXTRA_RECIPEIMAGE = "image";
+    public static final String EXTRA_RECIPEMATCH = "match";
 
     //ArrayAdapter<String> ingrAdapter;
 
@@ -28,7 +32,26 @@ public class RecipeActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_recipe);
         //Get the recipe from the intent
+
         int recipeId = (Integer) getIntent().getExtras().get(EXTRA_RECIPEID);
+
+        //Toast.makeText(this, "" + recipeId + nameId,Toast.LENGTH_SHORT).show();
+
+        String nameId = (String) getIntent().getExtras().get(EXTRA_RECIPENAME);
+        TextView name = (TextView) findViewById(R.id.name);
+        name.setText(nameId);
+
+        String descId = (String) getIntent().getExtras().get(EXTRA_RECIPEDESC);
+        TextView description = (TextView) findViewById(R.id.description);
+        description.setText(descId);
+
+        int photoId = (Integer) getIntent().getExtras().get(EXTRA_RECIPEIMAGE);
+        ImageView photo = (ImageView) findViewById(R.id.photo);
+        photo.setImageResource(photoId);
+
+        String matchId = (String) getIntent().getExtras().get(EXTRA_RECIPEMATCH);
+        TextView matchP = (TextView) findViewById(R.id.percentMatch);
+        matchP.setText("Match percentage: " + matchId +"%");
 
         /*****/
         final ListView ingredientsLv = (ListView) findViewById(R.id.ingredientsListView);
@@ -73,79 +96,6 @@ public class RecipeActivity extends Activity {
         final ArrayAdapter<String> arrayAdapter2 = new ArrayAdapter<String>
                 (this, android.R.layout.simple_list_item_1, instructions_list);
         instructionsLv.setAdapter(arrayAdapter2);
-
-
-        //Create a cursor
-        SQLiteOpenHelper recipeDatabaseHelper = new RecipeDatabaseHelper(this);
-        try {
-            SQLiteDatabase db = recipeDatabaseHelper.getReadableDatabase();
-            //db.setVersion(2);
-            Cursor cursor = db.query("DRINK",
-                    new String[]{"NAME", "DESCRIPTION", "IMAGE_RESOURCE_ID", "MATCH_PERCENTAGE", "LINK"},
-                    "_id = ?",
-                    new String[]{Integer.toString(recipeId)},
-                    null, null, null);
-            //Move to the first record in the Cursor
-            if (cursor.moveToFirst()) {
-                //Get the recipe details from the cursor
-                String nameText = cursor.getString(0);
-                String descriptionText = cursor.getString(1);
-                int photoId = cursor.getInt(2);
-                double matchId = cursor.getDouble(3);
-                String websiteLink = cursor.getString(4);
-                //int ingredients = cursor.getInt(3);
-
-                //Populate the recipe name
-                TextView name = (TextView) findViewById(R.id.name);
-                name.setText(nameText);
-
-                //Populate the recipe description
-                TextView description = (TextView) findViewById(R.id.description);
-                description.setText(descriptionText);
-
-                //Populate the recipe image
-
-                ImageView photo = (ImageView) findViewById(R.id.photo);
-                photo.setImageResource(photoId);
-                photo.setContentDescription(nameText);
-
-                TextView matchPercentage = (TextView) findViewById(R.id.percentMatch);
-                matchPercentage.setText("Match Percentage: " + String.valueOf(matchId));
-
-
-                //TextView web = (TextView) findViewById(R.id.website);
-                //web.setText(websiteLink);
-
-                //Populate the ingredients
-                /*
-                ListView listIngredients = (ListView) findViewById(R.id.ingredientsListView);
-                try {
-                    db = recipeDatabaseHelper.getReadableDatabase();
-                    cursor = db.query("DRINK",
-                            new String[]{"_id", "INGREDIENTS",},
-                            null, null, null, null, null);
-
-                    SimpleCursorAdapter listAdapter = new SimpleCursorAdapter(this,
-                            android.R.layout.simple_list_item_1,
-                            cursor,
-                            new String[]{"NAME"},
-                            new int[]{android.R.id.text1},
-                            0);
-
-                    listIngredients.setAdapter(listAdapter);
-
-                } catch(SQLiteException e) {
-                */
-                //Toast toast = Toast.makeText(this, "Ingredients and Instructions db tables unavailable", Toast.LENGTH_SHORT);
-               // toast.show();
-
-            }
-
-        } catch(SQLiteException e) {
-            Toast toast = Toast.makeText(this, "SQLiteDoneException", Toast.LENGTH_SHORT);
-            toast.show();
-        }
-
 
 
     }
