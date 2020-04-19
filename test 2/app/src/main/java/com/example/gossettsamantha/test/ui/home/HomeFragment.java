@@ -1,18 +1,13 @@
 package com.example.gossettsamantha.test.ui.home;
 
-import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
-import android.widget.ImageView;
-import android.widget.ListView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -35,29 +30,6 @@ public class HomeFragment extends Fragment implements
     private ArrayList<MyListItem> list;
     myAdapter adapter;
 
-    //private ArrayList<TestItem> mTestItemList;
-
-    public View.OnClickListener onItemClickListener = new View.OnClickListener() {
-        @Override
-        public void onClick(View view) {
-            //TODO: Step 4 of 4: Finally call getTag() on the view.
-            // This viewHolder will have all required values.
-            RecyclerView.ViewHolder viewHolder = (RecyclerView.ViewHolder) view.getTag();
-            int position = viewHolder.getAdapterPosition();
-            // viewHolder.getItemId();
-            // viewHolder.getItemViewType();
-            // viewHolder.itemView;
-            MyListItem thisItem = list.get(position);
-            Toast.makeText(getContext(), "You Clicked: " + thisItem.getName(), Toast.LENGTH_SHORT).show();
-        }
-    };
-
-
-
-
-
-
-
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -66,12 +38,9 @@ public class HomeFragment extends Fragment implements
 
         View root = inflater.inflate(R.layout.fragment_home, container, false);
 
-
         recyclerView = root.findViewById(R.id.recyclerView);
 
         SQLiteOpenHelper recipeDatabaseHelper = new RecipeDatabaseHelper(getContext());
-        //ListView listRecipes = (ListView) root.findViewById(R.id.recipe_list);
-
         db = recipeDatabaseHelper.getReadableDatabase();
         ArrayList<MyListItem> list = new ArrayList();
 
@@ -107,96 +76,11 @@ public class HomeFragment extends Fragment implements
 
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
         recyclerView.setLayoutManager(linearLayoutManager);
-
-        //recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         adapter = new myAdapter(getContext(), list, this);
-
-        // after this line
-/*
-        myAdapter.setOnItemClick(new OnItemClicked() {
-            @Override
-            public void onItemClick(int position) {
-
-            }
-        });
-
-
-
- */
-
-
-
-
-        //Create the listener
-
-
-/*
-
-        AdapterView.OnItemClickListener itemClickListener =
-                new AdapterView.OnItemClickListener(){
-                    @Override
-                    public void onItemClick(AdapterView<?> recyclerView,
-                                            View itemView,
-                                            int position,
-                                            long id) {
-                        //Pass the recipe the user clicks on to RecipeActivity
-                        Intent intent = new Intent(getActivity(),
-                                RecipeActivity.class);
-                        intent.putExtra(RecipeActivity.EXTRA_RECIPEID, (int) id);
-                        startActivity(intent);
-                    }
-                };
-
-        //Assign the listener to the list view
-        //recyclerView.setOnItemClickListener(itemClickListener);
-        //adapter.setOnItemClickListener(itemClickListener);
-
- */
-        //listRecipes.setOnItemClickListener(itemClickListener);
-
-
-
-
-/*
-    myAdapter recyclerViewAdapter = new myAdapter(getContext(), list);
-        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-        recyclerView.setAdapter(recyclerViewAdapter);
-        //
-        recyclerViewAdapter.setOnItemClickListener(onItemClickListener);
- */
-        //adapter = new myAdapter(getContext(), list);
-        // recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-        //recyclerView.setAdapter(adapter);
-        //
-
-        //adapter.setOnItemClickListener(onItemClickListener);
-
-
-        //adapter.setOnItemClickListener(onItemClickListener);
-
-
-
-
         recyclerView.setAdapter(adapter);
-
-
-
-
         return root;
+
     }
-
-
-    /*
-    public void onNoteClick(int position) {
-        Intent intent = new Intent(getContext(), RecipeActivity.class);
-        intent.putExtra("Name", TextTitle.get(position));
-        startActivity(intent);
-    }
-
-     */
-
-
-
 
     @Override
     public void onDestroy(){
@@ -208,17 +92,13 @@ public class HomeFragment extends Fragment implements
     @Override
     public void onNoteClick(int position) {
         Toast.makeText(getContext(), "Recipe page for this item will pop up.",Toast.LENGTH_SHORT).show();
-
-    }
-/*
-        Intent intent = new Intent(getContext(),
-                RecipeActivity.class);
+        Intent intent = new Intent(getContext(), RecipeActivity.class);
         intent.putExtra(RecipeActivity.EXTRA_RECIPEID, list.get(position));
         startActivity(intent);
     }
 
 
- */
+
 }
 
 
