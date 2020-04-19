@@ -25,8 +25,6 @@ public class RecipeActivity extends Activity {
     public static final String EXTRA_RECIPEIMAGE = "image";
     public static final String EXTRA_RECIPEMATCH = "match";
 
-    //ArrayAdapter<String> ingrAdapter;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -34,8 +32,6 @@ public class RecipeActivity extends Activity {
         //Get the recipe from the intent
 
         int recipeId = (Integer) getIntent().getExtras().get(EXTRA_RECIPEID);
-
-        //Toast.makeText(this, "" + recipeId + nameId,Toast.LENGTH_SHORT).show();
 
         String nameId = (String) getIntent().getExtras().get(EXTRA_RECIPENAME);
         TextView name = (TextView) findViewById(R.id.name);
@@ -53,7 +49,6 @@ public class RecipeActivity extends Activity {
         TextView matchP = (TextView) findViewById(R.id.percentMatch);
         matchP.setText("Match percentage: " + matchId +"%");
 
-        /*****/
         final ListView ingredientsLv = (ListView) findViewById(R.id.ingredientsListView);
 
         // Initializing a new String Array
@@ -76,7 +71,7 @@ public class RecipeActivity extends Activity {
         final ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>
                 (this, android.R.layout.simple_list_item_1, ingredients_list);
         ingredientsLv.setAdapter(arrayAdapter);
-/***/
+
         final ListView instructionsLv = (ListView) findViewById(R.id.instructionsListView);
 
         // Initializing a new String Array

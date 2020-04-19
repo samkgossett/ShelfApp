@@ -29,8 +29,6 @@ public class RecipeDatabaseHelper extends SQLiteOpenHelper {
         updateMyDatabase(db, oldVersion, newVersion);
     }
 
-
-
     private static void insertDrink(SQLiteDatabase db, int id, String name, String description,
                                     int resourceId, double match, String link) {
         ContentValues drinkValues = new ContentValues();
@@ -42,7 +40,6 @@ public class RecipeDatabaseHelper extends SQLiteOpenHelper {
         drinkValues.put("LINK", link);
         db.insert("DRINK", null, drinkValues);
     }
-
 
     private void updateMyDatabase(SQLiteDatabase db, int oldVersion, int newVersion) {
         if (oldVersion < 1) {

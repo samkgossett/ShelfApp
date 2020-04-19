@@ -41,14 +41,17 @@ public class HomeFragment extends Fragment  {
 
         recyclerView = root.findViewById(R.id.recyclerView);
 
+
         SQLiteOpenHelper recipeDatabaseHelper = new RecipeDatabaseHelper(getContext());
         db = recipeDatabaseHelper.getReadableDatabase();
+
+        //initializing ArrayList of MyListItems to store recipe data from the database
+        //this allows the recipe activity page to open to the correct items
         final ArrayList<MyListItem> list = new ArrayList();
 
         final String[] thisTitle = new String[20];
         final String[] thisMatch = new String[20];
         final String[] thisDesc = new String[20];
-
         final int[] thisPicture = new int[20];
         final int[] thisId = new int[20];
 
@@ -61,7 +64,6 @@ public class HomeFragment extends Fragment  {
 
             int titleColumn = cursor.getColumnIndex("NAME");
             int titleDesc = cursor.getColumnIndex("DESCRIPTION");
-
             int matchColumn = cursor.getColumnIndex("MATCH_PERCENTAGE");
             int pictureColumn = cursor.getColumnIndex("IMAGE_RESOURCE_ID");
             int idColumn = cursor.getColumnIndex("ID");
@@ -74,6 +76,7 @@ public class HomeFragment extends Fragment  {
                 thisPicture[i] = cursor.getInt(pictureColumn);
                 thisDesc[i] = cursor.getString(titleDesc);
                 thisId[i] = cursor.getInt(idColumn);
+
                 MyListItem items = new MyListItem(thisTitle[i], "Match percentage: " + thisMatch[i] +"%",  thisPicture[i]);
 
                 list.add(items);
@@ -92,7 +95,7 @@ public class HomeFragment extends Fragment  {
         adapter.setOnItemClickListener(new myAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(int position) {
-                Toast.makeText(getContext(), "Recipe page for this item will pop up." + position + " " + thisId[position],Toast.LENGTH_SHORT).show();
+                //Toast.makeText(getContext(), "Recipe page for this item will pop up." + position + " " + thisId[position],Toast.LENGTH_SHORT).show();
 
                 Intent intent = new Intent(getContext(), RecipeActivity.class);
                 intent.putExtra(RecipeActivity.EXTRA_RECIPEID, thisId[position]);
@@ -106,8 +109,6 @@ public class HomeFragment extends Fragment  {
             }
         });
 
-
-
         return root;
 
     }
@@ -118,8 +119,6 @@ public class HomeFragment extends Fragment  {
         cursor.close();
         db.close();
     }
-
-
 }
 
 
