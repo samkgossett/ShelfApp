@@ -42,12 +42,20 @@ public class RecipeDatabaseHelper extends SQLiteOpenHelper {
     }
 
     private void insertIngredient(SQLiteDatabase db, int idIngredient, int idRecipe, String ingredient) {
-        ContentValues recipeValues = new ContentValues();
-        recipeValues.put("ID", idIngredient);
-        recipeValues.put("RECIPE_ID", idRecipe);
-        recipeValues.put("INGREDIENT", ingredient);
-        db.insert("INGREDIENT", null, recipeValues);
+        ContentValues ingredientValues = new ContentValues();
+        ingredientValues.put("ID", idIngredient);
+        ingredientValues.put("RECIPE_ID", idRecipe);
+        ingredientValues.put("INGREDIENT", ingredient);
+        db.insert("INGREDIENT", null, ingredientValues);
 
+    }
+
+    private void insertInstruction(SQLiteDatabase db, int idInstruction, int idRecipe, String instruction) {
+        ContentValues instructionValues = new ContentValues();
+        instructionValues.put("ID", idInstruction);
+        instructionValues.put("RECIPE_ID", idRecipe);
+        instructionValues.put("INSTRUCTION", instruction);
+        db.insert("INSTRUCTION", null, instructionValues);
     }
 
     private void updateMyDatabase(SQLiteDatabase db, int oldVersion, int newVersion) {
@@ -89,6 +97,16 @@ public class RecipeDatabaseHelper extends SQLiteOpenHelper {
 
             insertIngredient(db, 1, 1, "chicken");
             insertIngredient(db, 2, 1, "zucchini");
+            insertIngredient(db, 3, 2, "zucchini");
+
+            db.execSQL("CREATE TABLE INSTRUCTION (_id INTEGER PRIMARY KEY AUTOINCREMENT, "
+                    + "ID, "
+                    + "RECIPE_ID, "
+                    + "INSTRUCTION);");
+
+            insertInstruction(db, 1, 1, "Instruction one for air fryer");
+            insertInstruction(db, 2, 1, "Instruction two for air fryer");
+            insertInstruction(db, 3, 2, "Instruction one for Rosemary Roasted");
 
             /*
               db.execSQL("CREATE TABLE INGREDIENT_RECIPE (_id INTEGER PRIMARY KEY AUTOINCREMENT, "
@@ -107,4 +125,6 @@ public class RecipeDatabaseHelper extends SQLiteOpenHelper {
             db.execSQL("ALTER TABLE INGREDIENT ADD COLUMN FAVORITE NUMERIC;");
         }
     }
+
+
 }

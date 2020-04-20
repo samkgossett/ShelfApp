@@ -87,14 +87,14 @@ public class RecipeActivity extends Activity {
                 int thisId = cursor.getInt(recId);
 
 
-                //Toast toast = Toast.makeText(this, " " + ingredientsrecipeid + " " + ingredientsid, Toast.LENGTH_SHORT);
+                //Toast toast = Toast.makeText(this, " " + thisId + " " + recId + " " + recipeId, Toast.LENGTH_SHORT);
                 //toast.show();
 
                 int i= 0 ;
 
                 do {
 
-                    if((recipeId == recId) ) {
+                    if((recipeId == cursor.getInt(recId)) ) {
                         ingr[i]= cursor.getString(ingredient);
                         ingredients_list.add(ingr[i]);
                         i++;
@@ -102,6 +102,7 @@ public class RecipeActivity extends Activity {
                         //toast.show();
                     }
                 }
+
                 while (cursor.moveToNext());
 
 
@@ -147,27 +148,55 @@ public class RecipeActivity extends Activity {
 
 
 
+/********************************************************************************************************/
+                                            /*  LISTVIEW   */
 
         final ListView instructionsLv = (ListView) findViewById(R.id.instructionsListView);
 
-        String[] instructions = new String[] {
-                "Instruction 1",
-                "Instruction 2",
-                "Instruction 3",
-                "Instruction 4",
-                "Instruction 5",
-                "Instruction 6"
-        };
-        // Initializing a new String Array
+        String[] instructions = new String[] {};
 
-        // Create a List from String Array elements
         final List<String> instructions_list = new ArrayList<String>(Arrays.asList(instructions));
 
-        // Create an ArrayAdapter from List
+        try {
+
+      cursor = db.query("INSTRUCTION",
+                    new String[]{"ID", "RECIPE_ID", "INSTRUCTION"},
+                    null,
+                    null,
+                    null, null, null);
+
+            final String[] instr = new String[20];
+
+            int ingId = cursor.getColumnIndex("ID");
+            int recId = cursor.getColumnIndex("RECIPE_ID");
+            int instruction = cursor.getColumnIndex("INSTRUCTION");
+
+            if (cursor != null && cursor.moveToFirst()) {
+                //get columns
+
+                int i= 0 ;
+
+                do {
+
+                    if((recipeId == cursor.getInt(recId)) ) {
+                        instr[i]= cursor.getString(instruction);
+                        instructions_list.add(instr[i]);
+                        i++;
+                    }
+                }
+
+                while (cursor.moveToNext());
+                cursor.close();
+            }
+
+        } catch(SQLiteException e) {
+            Toast toast = Toast.makeText(this, "SQLiteException", Toast.LENGTH_SHORT);
+            toast.show();
+        }
+
         final ArrayAdapter<String> arrayAdapter2 = new ArrayAdapter<String>
                 (this, android.R.layout.simple_list_item_1, instructions_list);
         instructionsLv.setAdapter(arrayAdapter2);
-
 
     }
 }
