@@ -43,7 +43,7 @@ public class PantryFragment extends Fragment {
         //starts new Database
         IngredDatabase = new DatabaseHelper(getContext());
         ingredientsList = root.findViewById(R.id.IngredientsList);
-        
+
 
         //Variable Buttons for the toolbar and database buttons
 
