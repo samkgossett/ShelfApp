@@ -104,9 +104,9 @@ public class RecipeDatabaseHelper extends SQLiteOpenHelper {
                     + "RECIPE_ID, "
                     + "INSTRUCTION);");
 
-            insertInstruction(db, 1, 1, "Instruction one for air fryer");
-            insertInstruction(db, 2, 1, "Instruction two for air fryer");
-            insertInstruction(db, 3, 2, "Instruction one for Rosemary Roasted");
+            insertInstruction(db, 1, 1, "1. Instruction one for air fryer");
+            insertInstruction(db, 2, 1, "2. Instruction two for air fryer");
+            insertInstruction(db, 3, 2, "1. Instruction one for Rosemary Roasted");
 
             /*
               db.execSQL("CREATE TABLE INGREDIENT_RECIPE (_id INTEGER PRIMARY KEY AUTOINCREMENT, "

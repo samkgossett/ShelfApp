@@ -66,8 +66,6 @@ public class RecipeActivity extends Activity {
 
         try {
 
-            //db.setVersion(2);
-
             cursor = db.query("INGREDIENT",
                     new String[]{"ID", "RECIPE_ID", "INGREDIENT"},
                     null,
@@ -86,10 +84,6 @@ public class RecipeActivity extends Activity {
 
                 int thisId = cursor.getInt(recId);
 
-
-                //Toast toast = Toast.makeText(this, " " + thisId + " " + recId + " " + recipeId, Toast.LENGTH_SHORT);
-                //toast.show();
-
                 int i= 0 ;
 
                 do {
@@ -104,29 +98,6 @@ public class RecipeActivity extends Activity {
                 }
 
                 while (cursor.moveToNext());
-
-
-
-/*
-                int i = 0;
-                do {
-
-                    thisTitle[i] = cursor.getString(titleColumn);
-                    thisMatch[i] = cursor.getString(matchColumn);
-                    thisPicture[i] = cursor.getInt(pictureColumn);
-                    thisDesc[i] = cursor.getString(titleDesc);
-                    thisId[i] = cursor.getInt(idColumn);
-
-                    String items = new ;
-
-                    instructions.add(items);
-                    i++;
-                }
-                while (cursor.moveToNext());
-
-
- */
-
 
                 cursor.close();
             }
@@ -143,8 +114,6 @@ public class RecipeActivity extends Activity {
         final ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>
                 (this, android.R.layout.simple_list_item_1, ingredients_list);
         ingredientsLv.setAdapter(arrayAdapter);
-
-
 
 
 
