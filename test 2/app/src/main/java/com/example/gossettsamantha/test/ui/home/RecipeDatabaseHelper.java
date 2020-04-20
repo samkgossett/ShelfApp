@@ -41,16 +41,23 @@ public class RecipeDatabaseHelper extends SQLiteOpenHelper {
         db.insert("DRINK", null, drinkValues);
     }
 
-    private void insertIngredient(SQLiteDatabase db, int idIngredient, int idRecipe, String ingredient) {
+    private static void insertIngredient(SQLiteDatabase db, int ingredientId, String ingredient) {
         ContentValues ingredientValues = new ContentValues();
-        ingredientValues.put("ID", idIngredient);
-        ingredientValues.put("RECIPE_ID", idRecipe);
+        ingredientValues.put("INGREDIENT_ID", ingredientId);
         ingredientValues.put("INGREDIENT", ingredient);
         db.insert("INGREDIENT", null, ingredientValues);
 
     }
 
-    private void insertInstruction(SQLiteDatabase db, int idInstruction, int idRecipe, String instruction) {
+    private static void insertIngredientRecipeTable(SQLiteDatabase db, int ingredientId, int recipeId) {
+        ContentValues ingredientRecipeValues = new ContentValues();
+        ingredientRecipeValues.put("INGREDIENT_ID", ingredientId);
+        ingredientRecipeValues.put("RECIPE_ID", recipeId);
+        db.insert("INGREDIENT_RECIPE", null, ingredientRecipeValues);
+    }
+
+
+    private static void insertInstruction(SQLiteDatabase db, int idInstruction, int idRecipe, String instruction) {
         ContentValues instructionValues = new ContentValues();
         instructionValues.put("ID", idInstruction);
         instructionValues.put("RECIPE_ID", idRecipe);
@@ -80,14 +87,27 @@ public class RecipeDatabaseHelper extends SQLiteOpenHelper {
             insertDrink(db, 8, "Chicken Breasts with Tomatoes and Olives", "A classic take-out dish made simple in your Instant Pot®. Don't forget to pick up some fortune cookies and feel free to leave out the sriracha if sensitive to heat. Serve over rice and garnish with green onions and sesame seeds.", R.drawable.oneygar, 85.3, "https://www.allrecipes.com/recipe/270944/instant-pot-honey-garlic-chicken/");
 
 
+            db.execSQL("CREATE TABLE INGREDIENT_RECIPE (_id INTEGER PRIMARY KEY AUTOINCREMENT, "
+                    + "INGREDIENT_ID, "
+                    + "RECIPE_ID);");
+
+            insertIngredientRecipeTable(db, 0, 0);
+            insertIngredientRecipeTable(db, 1, 1);
+            insertIngredientRecipeTable(db, 2, 1);
+            insertIngredientRecipeTable(db, 2, 2);
+            insertIngredientRecipeTable(db, 3, 2);
+            insertIngredientRecipeTable(db, 0, 2);
+
+
             db.execSQL("CREATE TABLE INGREDIENT (_id INTEGER PRIMARY KEY AUTOINCREMENT, "
-                    + "ID, "
-                    + "RECIPE_ID, "
+                    + "INGREDIENT_ID, "
                     + "INGREDIENT);");
 
-            insertIngredient(db, 1, 1, "chicken");
-            insertIngredient(db, 2, 1, "zucchini");
-            insertIngredient(db, 3, 2, "zucchini");
+            insertIngredient(db, 0, "iguana");
+            insertIngredient(db, 1, "chicken");
+            insertIngredient(db, 2,  "zucchini");
+            insertIngredient(db, 3,  "apple");
+
 
             db.execSQL("CREATE TABLE INSTRUCTION (_id INTEGER PRIMARY KEY AUTOINCREMENT, "
                     + "ID, "
@@ -97,24 +117,21 @@ public class RecipeDatabaseHelper extends SQLiteOpenHelper {
             insertInstruction(db, 1, 1, "1. Instruction one for air fryer");
             insertInstruction(db, 2, 1, "2. Instruction two for air fryer");
             insertInstruction(db, 3, 2, "1. Instruction one for Rosemary Roasted");
+            insertInstruction(db, 4, 2, "2. Instruction two for Rosemary Roasted");
+            insertInstruction(db, 5, 2, "3. Instruction three for Rosemary Roasted");
 
-            /*
-              db.execSQL("CREATE TABLE INGREDIENT_RECIPE (_id INTEGER PRIMARY KEY AUTOINCREMENT, "
-                    + "ID, "
-                    + "RECIPE_ID, "
-                    + "INGREDIENT);");
-
-            insertIngredient(db, 1, 1, "chicken");
-            insertIngredient(db, 2, 1, "zucchini");
-             */
         }
 
 
         if (oldVersion < 2) {
             db.execSQL("ALTER TABLE DRINK ADD COLUMN FAVORITE NUMERIC;");
             db.execSQL("ALTER TABLE INGREDIENT ADD COLUMN FAVORITE NUMERIC;");
+            db.execSQL("ALTER TABLE INGREDIENT_RECIPE ADD COLUMN FAVORITE NUMERIC;");
+            db.execSQL("ALTER TABLE INSTRUCTION ADD COLUMN FAVORITE NUMERIC;");
         }
     }
+
+
 
 
 }
