@@ -41,6 +41,15 @@ public class RecipeDatabaseHelper extends SQLiteOpenHelper {
         db.insert("DRINK", null, drinkValues);
     }
 
+    private void insertIngredient(SQLiteDatabase db, int idIngredient, int idRecipe, String ingredient) {
+        ContentValues recipeValues = new ContentValues();
+        recipeValues.put("ID", idIngredient);
+        recipeValues.put("RECIPE_ID", idRecipe);
+        recipeValues.put("INGREDIENT", ingredient);
+        db.insert("INGREDIENT", null, recipeValues);
+
+    }
+
     private void updateMyDatabase(SQLiteDatabase db, int oldVersion, int newVersion) {
         if (oldVersion < 1) {
             db.execSQL("CREATE TABLE DRINK (_id INTEGER PRIMARY KEY AUTOINCREMENT, "
@@ -71,9 +80,31 @@ public class RecipeDatabaseHelper extends SQLiteOpenHelper {
             insertDrink(db, 16, "Biscuit-Topped Chicken Potpie", "Our best drip coffee", R.drawable.instantpot, match, "2213");
             insertDrink(db, 17, "Spiedini of Chicken and Zucchini with Almond Salsa Verde", "Our best drip coffee", R.drawable.instantpot, match, "2213");
 
+
+
+            db.execSQL("CREATE TABLE INGREDIENT (_id INTEGER PRIMARY KEY AUTOINCREMENT, "
+                    + "ID, "
+                    + "RECIPE_ID, "
+                    + "INGREDIENT);");
+
+            insertIngredient(db, 1, 1, "chicken");
+            insertIngredient(db, 2, 1, "zucchini");
+
+            /*
+              db.execSQL("CREATE TABLE INGREDIENT_RECIPE (_id INTEGER PRIMARY KEY AUTOINCREMENT, "
+                    + "ID, "
+                    + "RECIPE_ID, "
+                    + "INGREDIENT);");
+
+            insertIngredient(db, 1, 1, "chicken");
+            insertIngredient(db, 2, 1, "zucchini");
+             */
         }
+
+
         if (oldVersion < 2) {
             db.execSQL("ALTER TABLE DRINK ADD COLUMN FAVORITE NUMERIC;");
+            db.execSQL("ALTER TABLE INGREDIENT ADD COLUMN FAVORITE NUMERIC;");
         }
     }
 }

@@ -19,9 +19,6 @@ public class PantryFragment extends Fragment {
 
     private Pantry pantry;
 
-    RecyclerView recyclerView;
-    ArrayList<String> items;
-
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
         pantry =

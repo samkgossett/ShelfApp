@@ -24,6 +24,10 @@ public class RecipeActivity extends Activity {
     public static final String EXTRA_RECIPEDESC = "desc" ;
     public static final String EXTRA_RECIPEIMAGE = "image";
     public static final String EXTRA_RECIPEMATCH = "match";
+    private Cursor cursor;
+    private Cursor cursor2;
+
+    private SQLiteDatabase db;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,29 +56,100 @@ public class RecipeActivity extends Activity {
         final ListView ingredientsLv = (ListView) findViewById(R.id.ingredientsListView);
 
         // Initializing a new String Array
-        String[] ingredients = new String[] {
-                "Ingredient 1",
-                "Ingredient 2",
-                "Ingredient 3",
-                "Ingredient 4",
-                "Ingredient 5",
-                "Ingredient 6",
-                "Ingredient 7",
-                "Ingredient 8",
-                "Ingredient 9"
-        };
+        String[] ingredients = new String[] {};
+
+        SQLiteOpenHelper recipeDatabaseHelper = new RecipeDatabaseHelper(this);
+        db = recipeDatabaseHelper.getReadableDatabase();
+
+
+        final List<String> ingredients_list = new ArrayList<String>(Arrays.asList(ingredients));
+
+        try {
+
+            //db.setVersion(2);
+
+            cursor = db.query("INGREDIENT",
+                    new String[]{"ID", "RECIPE_ID", "INGREDIENT"},
+                    null,
+                    null,
+                    null, null, null);
+
+            final String[] ingr = new String[20];
+
+            int ingId = cursor.getColumnIndex("ID");
+            int recId = cursor.getColumnIndex("RECIPE_ID");
+            int ingredient = cursor.getColumnIndex("INGREDIENT");
+
+
+            if (cursor != null && cursor.moveToFirst()) {
+                //get columns
+
+                int thisId = cursor.getInt(recId);
+
+
+                //Toast toast = Toast.makeText(this, " " + ingredientsrecipeid + " " + ingredientsid, Toast.LENGTH_SHORT);
+                //toast.show();
+
+                int i= 0 ;
+
+                do {
+
+                    if((recipeId == recId) ) {
+                        ingr[i]= cursor.getString(ingredient);
+                        ingredients_list.add(ingr[i]);
+                        i++;
+                        //Toast toast = Toast.makeText(this, "" + recId + " " + recipeId + " " + thisId, Toast.LENGTH_SHORT);
+                        //toast.show();
+                    }
+                }
+                while (cursor.moveToNext());
+
+
+
+/*
+                int i = 0;
+                do {
+
+                    thisTitle[i] = cursor.getString(titleColumn);
+                    thisMatch[i] = cursor.getString(matchColumn);
+                    thisPicture[i] = cursor.getInt(pictureColumn);
+                    thisDesc[i] = cursor.getString(titleDesc);
+                    thisId[i] = cursor.getInt(idColumn);
+
+                    String items = new ;
+
+                    instructions.add(items);
+                    i++;
+                }
+                while (cursor.moveToNext());
+
+
+ */
+
+
+                cursor.close();
+            }
+
+        } catch(SQLiteException e) {
+            Toast toast = Toast.makeText(this, "SQLiteException", Toast.LENGTH_SHORT);
+            toast.show();
+        }
 
         // Create a List from String Array elements
-        final List<String> ingredients_list = new ArrayList<String>(Arrays.asList(ingredients));
+
 
         // Create an ArrayAdapter from List
         final ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>
                 (this, android.R.layout.simple_list_item_1, ingredients_list);
         ingredientsLv.setAdapter(arrayAdapter);
 
+
+
+
+
+
         final ListView instructionsLv = (ListView) findViewById(R.id.instructionsListView);
 
-        // Initializing a new String Array
         String[] instructions = new String[] {
                 "Instruction 1",
                 "Instruction 2",
@@ -83,6 +158,7 @@ public class RecipeActivity extends Activity {
                 "Instruction 5",
                 "Instruction 6"
         };
+        // Initializing a new String Array
 
         // Create a List from String Array elements
         final List<String> instructions_list = new ArrayList<String>(Arrays.asList(instructions));
