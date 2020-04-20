@@ -30,6 +30,50 @@
             android:textSize="35dp"
             android:textStyle="bold" />
 
+    <TextView
+        android:id="@+id/PantryList"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Pantry List"
+        android:layout_margin="15dp"
+        android:layout_gravity="center"
+        android:textSize="30sp" />
+
+        <ListView
+            android:id="@+id/IngredientsList"
+            android:layout_width="272dp"
+
+            android:layout_height="283dp"
+            android:layout_gravity="center"
+            android:layout_margin="15dp" />
+
+        <LinearLayout
+            android:id="@+id/linearLayout"
+            android:layout_width="match_parent"
+            android:layout_height="43dp"
+            android:gravity="center"
+            android:layout_gravity="center"
+            android:layout_margin="1dp"
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/home"
+                android:layout_width="68dp"
+                android:layout_height="wrap_content"
+                android:text="Home" />
+
+            <Button
+                android:id="@+id/food"
+                android:layout_width="70dp"
+                android:layout_height="wrap_content"
+                android:text="Food" />
+
+            <Button
+                android:id="@+id/profile"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Profile" />
+        </LinearLayout>
 
     </LinearLayout>
 

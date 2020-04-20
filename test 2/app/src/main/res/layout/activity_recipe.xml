@@ -32,7 +32,7 @@
                 android:id="@+id/percentMatch"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-
+                android:padding="5dp"
                 android:gravity="center_horizontal"
                 android:text="match percentage"
                 android:textSize="20dp" />
@@ -43,7 +43,6 @@
                 android:layout_height="250dp"
                 android:layout_gravity="center_horizontal"
                 android:background="#FFFFFF"
-
                 android:padding="5dp"
                 android:scaleType="fitXY" />
 
@@ -56,11 +55,11 @@
                 android:text="description" />
 
             <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_width="fill_parent"
+                android:layout_height="match_parent"
                 android:orientation="horizontal">
 
-                <TextView
+                <Button
                     android:id="@+id/ingredientsHeader"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
@@ -68,41 +67,43 @@
                     android:background="#009688"
                     android:fontFamily="sans-serif-smallcaps"
                     android:gravity="center"
-
+                    android:clickable="true"
                     android:text="Ingredients"
-                    android:textSize="30dp" />
+                    android:textSize="30dp"/>
 
-                <TextView
-                    android:id="@+id/recipeHeader"
+
+                <Button
+                    android:id="@+id/instructionsHeader"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:background="#009688"
                     android:fontFamily="sans-serif-smallcaps"
                     android:gravity="center"
+                    android:clickable="true"
                     android:text="Instructions"
                     android:textSize="30dp" />
+
+
             </LinearLayout>
 
             <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_weight="1"
+                android:layout_width="fill_parent"
                 android:layout_height="match_parent"
                 android:orientation="horizontal">
 
                 <ListView
                     android:id="@+id/ingredientsListView"
-                    android:layout_width="wrap_content"
+                    android:layout_width="fill_parent"
                     android:layout_weight="1"
-                    android:layout_height="match_parent"
-                    android:paddingHorizontal="36dp" />
+                    android:layout_height="match_parent" />
 
                 <ListView
                     android:id="@+id/instructionsListView"
-                    android:layout_width="wrap_content"
+                    android:layout_width="fill_parent"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
-                    android:paddingHorizontal="40dp"
+
 
                     >
 

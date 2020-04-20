@@ -73,8 +73,6 @@ public class MainActivity extends AppCompatActivity {
     public void yourRec(View v) {
         Toast.makeText(MainActivity.this, "Recipe page for this item will pop up.",Toast.LENGTH_SHORT).show();
 
-
-
         }
     }
 

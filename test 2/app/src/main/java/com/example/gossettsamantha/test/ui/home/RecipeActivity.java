@@ -1,18 +1,24 @@
 package com.example.gossettsamantha.test.ui.home;
 
 import android.app.Activity;
+import android.content.Context;
+import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteException;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.gossettsamantha.test.R;
+import com.example.gossettsamantha.test.ui.pantry.PantryFragment;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -103,7 +109,6 @@ public class RecipeActivity extends Activity {
                 //get columns
 
                 do {
-
                     if((recipeId == ingrRecCursor.getInt(recId)) ) {
 
                         if (ingCursor != null && ingCursor.moveToFirst()) {
@@ -118,13 +123,13 @@ public class RecipeActivity extends Activity {
                                             int i = 0;
 
                                             if ((ingrRecCursor.getInt(inReAmountId) == amountCursor.getInt(amountId))) {
-                                                ingr[i] = ingCursor.getString(ingredient) + ":" + "\n" + amountCursor.getString(amount);
+                                                ingr[i] =  amountCursor.getString(amount)  + " " + ingCursor.getString(ingredient);
                                                 ingredients_list.add(ingr[i]);
                                                 i++;
                                             }
 
                                         }while( amountCursor.moveToNext());
-                                }
+                                    }
                                 }
                             } while (ingCursor.moveToNext());
                         }
@@ -143,6 +148,30 @@ public class RecipeActivity extends Activity {
                 (this, android.R.layout.simple_list_item_1, ingredients_list);
         ingredientsLv.setAdapter(arrayAdapter);
 
+
+        Button ingButton = (Button) findViewById(R.id.ingredientsHeader);
+        //set onclicklistener for your button
+        ingButton.setOnClickListener(
+                new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Toast.makeText(getApplicationContext(), "button clicked",Toast.LENGTH_SHORT).show();
+                        //Intent intent = new Intent( v.getContext(), PantryFragment.class);
+                        //intent.putExtra(RecipeActivity.EXTRA_RECIPEID, position);
+                        //intent.putExtra(RecipeActivity.NAME, list.get(position).getName());
+                        //getApplicationContext().startActivity(new Intent( v.getContext(), PantryFragment.class));
+                    }
+                });
+
+
+        ingredientsLv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+
+            @Override
+            public void onItemClick(AdapterView<?> arg0, View arg1, int position, long arg3) {
+
+                Toast.makeText(getApplicationContext(), "ing button clicked!",Toast.LENGTH_SHORT).show();
+            }
+        });
 
 /********************************************************************************************************/
                                             /*  INSTRUCTIONS   */
@@ -193,6 +222,33 @@ public class RecipeActivity extends Activity {
                 (this, android.R.layout.simple_list_item_1, instructions_list);
         instructionsLv.setAdapter(arrayAdapter2);
 
+
+        instructionsLv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+
+            @Override
+            public void onItemClick(AdapterView<?> arg0, View arg1, int position, long arg3) {
+
+                Toast.makeText(getApplicationContext(), "instr clicked!",Toast.LENGTH_SHORT).show();
+            }
+        });
+        Button instr = (Button) findViewById(R.id.instructionsHeader);
+        //set onclicklistener for your button
+        instr.setOnClickListener(
+                new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Toast.makeText(getApplicationContext(), "Instr button clicked",Toast.LENGTH_SHORT).show();
+                        //Intent intent = new Intent( v.getContext(), PantryFragment.class);
+                        //intent.putExtra(RecipeActivity.EXTRA_RECIPEID, position);
+                        //intent.putExtra(RecipeActivity.NAME, list.get(position).getName());
+                        //getApplicationContext().startActivity(new Intent( v.getContext(), PantryFragment.class));
+                    }
+                });
+
     }
+
+
+
+
 }
 
