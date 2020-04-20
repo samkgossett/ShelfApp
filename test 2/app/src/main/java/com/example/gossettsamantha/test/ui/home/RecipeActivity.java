@@ -24,9 +24,10 @@ public class RecipeActivity extends Activity {
     public static final String EXTRA_RECIPEDESC = "desc" ;
     public static final String EXTRA_RECIPEIMAGE = "image";
     public static final String EXTRA_RECIPEMATCH = "match";
-    private Cursor cursor;
-    private Cursor cursor1;
-    private Cursor cursor2;
+    private Cursor instrCursor;
+    private Cursor ingrRecCursor;
+    private Cursor ingCursor;
+    private Cursor amountCursor;
 
     private SQLiteDatabase db;
 
@@ -68,46 +69,69 @@ public class RecipeActivity extends Activity {
         try {
             SQLiteOpenHelper recipeDatabaseHelper = new RecipeDatabaseHelper(this);
             db = recipeDatabaseHelper.getReadableDatabase();
-            cursor1 = db.query("INGREDIENT_RECIPE",
-                    new String[]{"INGREDIENT_ID", "RECIPE_ID"},
+            ingrRecCursor = db.query("INGREDIENT_RECIPE",
+                    new String[]{"INGREDIENT_ID", "RECIPE_ID", "AMOUNT_ID"},
                     null,
                     null,
                     null, null, null);
 
             final String[] ingr = new String[20];
 
-            int ingRecId = cursor1.getColumnIndex("INGREDIENT_ID");
-            int recId = cursor1.getColumnIndex("RECIPE_ID");
+            int ingRecId = ingrRecCursor.getColumnIndex("INGREDIENT_ID");
+            int recId = ingrRecCursor.getColumnIndex("RECIPE_ID");
+            int inReAmountId = ingrRecCursor.getColumnIndex("AMOUNT_ID");
 
-            cursor2 = db.query("INGREDIENT",
+            ingCursor = db.query("INGREDIENT",
                     new String[]{"INGREDIENT_ID", "INGREDIENT"},
                     null,
                     null,
                     null, null, null);
 
-            int ingId = cursor1.getColumnIndex("INGREDIENT_ID");
-            int ingredient = cursor2.getColumnIndex("INGREDIENT");
+            int ingId = ingrRecCursor.getColumnIndex("INGREDIENT_ID");
+            int ingredient = ingCursor.getColumnIndex("INGREDIENT");
 
-            if (cursor1 != null && cursor1.moveToFirst()) {
+            amountCursor = db.query("AMOUNT",
+                    new String[]{"AMOUNT_ID", "AMOUNT"},
+                    null,
+                    null,
+                    null, null, null);
+
+            int amountId = amountCursor.getColumnIndex("AMOUNT_ID");
+            int amount = amountCursor.getColumnIndex("AMOUNT");
+
+            if (ingrRecCursor != null && ingrRecCursor.moveToFirst()) {
                 //get columns
 
                 do {
-                    if((recipeId == cursor1.getInt(recId)) ) {
-                        int i= 0 ;
-                        if (cursor2 != null && cursor2.moveToFirst()) {
+
+                    if((recipeId == ingrRecCursor.getInt(recId)) ) {
+
+                        if (ingCursor != null && ingCursor.moveToFirst()) {
 
                             do {
-                                if((cursor1.getInt(ingRecId) == cursor2.getInt(ingId)) ) {
-                                    ingr[i]= cursor2.getString(ingredient);
-                                    ingredients_list.add(ingr[i]);
-                                    i++;
+
+                                if((ingrRecCursor.getInt(ingRecId) == ingCursor.getInt(ingId)) ) {
+
+                                    if (amountCursor != null && amountCursor.moveToFirst()) {
+
+                                        do {
+                                            int i = 0;
+
+                                            if ((ingrRecCursor.getInt(inReAmountId) == amountCursor.getInt(amountId))) {
+                                                ingr[i] = ingCursor.getString(ingredient) + ":" + "\n" + amountCursor.getString(amount);
+                                                ingredients_list.add(ingr[i]);
+                                                i++;
+                                            }
+
+                                        }while( amountCursor.moveToNext());
                                 }
-                            } while (cursor2.moveToNext());
+                                }
+                            } while (ingCursor.moveToNext());
                         }
                     }
                 }
-                while (cursor1.moveToNext());
-                cursor1.close();
+                while (ingrRecCursor.moveToNext());
+                ingrRecCursor.close();
             }
 
         } catch(SQLiteException e) {
@@ -133,7 +157,7 @@ public class RecipeActivity extends Activity {
             SQLiteOpenHelper recipeDatabaseHelper = new RecipeDatabaseHelper(this);
             db = recipeDatabaseHelper.getReadableDatabase();
 
-      cursor = db.query("INSTRUCTION",
+      instrCursor = db.query("INSTRUCTION",
                     new String[]{"ID", "RECIPE_ID", "INSTRUCTION"},
                     null,
                     null,
@@ -141,23 +165,23 @@ public class RecipeActivity extends Activity {
 
             final String[] instr = new String[20];
 
-            int ingId = cursor.getColumnIndex("ID");
-            int recId = cursor.getColumnIndex("RECIPE_ID");
-            int instruction = cursor.getColumnIndex("INSTRUCTION");
+            int ingId = instrCursor.getColumnIndex("ID");
+            int recId = instrCursor.getColumnIndex("RECIPE_ID");
+            int instruction = instrCursor.getColumnIndex("INSTRUCTION");
 
-            if (cursor != null && cursor.moveToFirst()) {
+            if (instrCursor != null && instrCursor.moveToFirst()) {
                 //get columns
 
                 int i= 0 ;
                 do {
-                    if((recipeId == cursor.getInt(recId)) ) {
-                        instr[i]= cursor.getString(instruction);
+                    if((recipeId == instrCursor.getInt(recId)) ) {
+                        instr[i]= instrCursor.getString(instruction);
                         instructions_list.add(instr[i]);
                         i++;
                     }
                 }
-                while (cursor.moveToNext());
-                cursor.close();
+                while (instrCursor.moveToNext());
+                instrCursor.close();
             }
 
         } catch(SQLiteException e) {

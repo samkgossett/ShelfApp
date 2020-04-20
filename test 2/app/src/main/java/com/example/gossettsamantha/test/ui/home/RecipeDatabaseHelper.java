@@ -49,10 +49,18 @@ public class RecipeDatabaseHelper extends SQLiteOpenHelper {
 
     }
 
-    private static void insertIngredientRecipeTable(SQLiteDatabase db, int ingredientId, int recipeId) {
+    private void insertAmount(SQLiteDatabase db, int amount_id, String amount) {
+        ContentValues amountValues = new ContentValues();
+        amountValues.put("AMOUNT_ID", amount_id);
+        amountValues.put("AMOUNT", amount);
+        db.insert("AMOUNT", null, amountValues);
+    }
+
+    private static void insertIngredientRecipeTable(SQLiteDatabase db, int recipeId, int ingredientId,  int amountId) {
         ContentValues ingredientRecipeValues = new ContentValues();
         ingredientRecipeValues.put("INGREDIENT_ID", ingredientId);
         ingredientRecipeValues.put("RECIPE_ID", recipeId);
+        ingredientRecipeValues.put("AMOUNT_ID", amountId);
         db.insert("INGREDIENT_RECIPE", null, ingredientRecipeValues);
     }
 
@@ -75,7 +83,6 @@ public class RecipeDatabaseHelper extends SQLiteOpenHelper {
                     + "MATCH_PERCENTAGE, "
                     + "LINK);");
 
-
             insertDrink(db, 0,"Chicken Puttanesca with Angel Hair Pasta", "Our best drip coffee", R.drawable.instantpot, 30.2, "2213");
             insertDrink(db, 1,"Air Fryer Chicken Taquitos", "These taquitos are air fried, which makes them healthier than deep fried ones. Using shredded rotisserie chicken provides a quick prep but you can always use home-cooked chicken. Serve with sides of sour cream, Mexican tomato sauce, and guacamole, or your choice of sides.", R.drawable.airfryerchickentaquitos, 95.2, "https://www.allrecipes.com/recipe/279015/air-fryer-chicken-taquitos/?internalSource=streams&referringId=201&referringContentType=Recipe%20Hub&clickId=st_recipes_mades");
             insertDrink(db, 2, "Rosemary-Roasted Chicken with Apples and Potatoes", "The beginning of fall comes with an abundance of apples, which means it's time to start baking! But more than pies, apples roast extremely well with chicken! This dish makes a fantastic sweater-weather meal, with beautifully roasted chicken and an apple, potato, and onion bake that takes advantage of the delicious roasted chicken drippings.", R.drawable.rosemarychicken, 94.5, "https://www.allrecipes.com/recipe/276263/rosemary-roasted-chicken-with-apples-and-potatoes/?internalSource=staff%20pick&referringId=201&referringContentType=Recipe%20Hub");
@@ -89,14 +96,17 @@ public class RecipeDatabaseHelper extends SQLiteOpenHelper {
 
             db.execSQL("CREATE TABLE INGREDIENT_RECIPE (_id INTEGER PRIMARY KEY AUTOINCREMENT, "
                     + "INGREDIENT_ID, "
-                    + "RECIPE_ID);");
+                    + "RECIPE_ID, "
+                    + "AMOUNT_ID);");
 
-            insertIngredientRecipeTable(db, 0, 0);
-            insertIngredientRecipeTable(db, 1, 1);
-            insertIngredientRecipeTable(db, 2, 1);
-            insertIngredientRecipeTable(db, 2, 2);
-            insertIngredientRecipeTable(db, 3, 2);
-            insertIngredientRecipeTable(db, 0, 2);
+            //recipe, ingredient, amount ids
+            insertIngredientRecipeTable(db, 0, 0, 0);
+            insertIngredientRecipeTable(db, 1, 1, 0);
+            insertIngredientRecipeTable(db, 1, 2, 0);
+            insertIngredientRecipeTable(db, 2, 1, 0);
+            insertIngredientRecipeTable(db, 2, 2,1);
+            insertIngredientRecipeTable(db, 3, 2,1);
+            insertIngredientRecipeTable(db, 0, 2,1);
 
 
             db.execSQL("CREATE TABLE INGREDIENT (_id INTEGER PRIMARY KEY AUTOINCREMENT, "
@@ -107,6 +117,19 @@ public class RecipeDatabaseHelper extends SQLiteOpenHelper {
             insertIngredient(db, 1, "chicken");
             insertIngredient(db, 2,  "zucchini");
             insertIngredient(db, 3,  "apple");
+
+
+            db.execSQL("CREATE TABLE AMOUNT (_id INTEGER PRIMARY KEY AUTOINCREMENT, "
+                    + "AMOUNT_ID, "
+                    + "AMOUNT);");
+
+            //amount id has amount
+            insertAmount(db, 0, "one teaspoon");
+            insertAmount(db, 1, "two teaspoons");
+            insertAmount(db, 2, "three teaspoons");
+            insertAmount(db, 3, "four teaspoons");
+            insertAmount(db, 4,  "five teaspoons");
+
 
 
             db.execSQL("CREATE TABLE INSTRUCTION (_id INTEGER PRIMARY KEY AUTOINCREMENT, "
@@ -127,10 +150,10 @@ public class RecipeDatabaseHelper extends SQLiteOpenHelper {
             db.execSQL("ALTER TABLE DRINK ADD COLUMN FAVORITE NUMERIC;");
             db.execSQL("ALTER TABLE INGREDIENT ADD COLUMN FAVORITE NUMERIC;");
             db.execSQL("ALTER TABLE INGREDIENT_RECIPE ADD COLUMN FAVORITE NUMERIC;");
+            db.execSQL("ALTER TABLE AMOUNT ADD COLUMN FAVORITE NUMERIC;");
             db.execSQL("ALTER TABLE INSTRUCTION ADD COLUMN FAVORITE NUMERIC;");
         }
     }
-
 
 
 
