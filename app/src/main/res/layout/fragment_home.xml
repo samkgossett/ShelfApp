@@ -26,7 +26,7 @@
             android:fontFamily="cursive"
             android:gravity="center"
             android:padding="5dp"
-            android:text="Welcome, user!"
+            android:text="Welcome, Kimberly! "
             android:textColor="#1E1E1E"
             android:textSize="35dp"
             android:textStyle="bold" />
