@@ -1,15 +1,22 @@
 package com.example.gossettsamantha.test.ui.pantry;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
+import android.preference.PreferenceManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.CheckBox;
+import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.RadioGroup;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -31,6 +38,10 @@ public class PantryFragment extends Fragment {
     private Pantry pantry;
     DatabaseHelper IngredDatabase;
     ListView ingredientsList;
+
+    private  RadioGroup radioGroup;
+    private CheckBox checkBox[];
+    private LinearLayout linLay;
     int click = 0;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
@@ -39,12 +50,13 @@ public class PantryFragment extends Fragment {
                 ViewModelProviders.of(this).get(Pantry.class);
         View root = inflater.inflate(R.layout.fragment_pantry, container, false);
 
-
         //starts new Database
         IngredDatabase = new DatabaseHelper(getContext());
         ingredientsList = root.findViewById(R.id.IngredientsList);
 
+        radioGroup = (RadioGroup) root.findViewById(R.id.radioGroup);
 
+        linLay = (LinearLayout) root.findViewById(R.id.linLay);
         //Variable Buttons for the toolbar and database buttons
 
 
@@ -91,6 +103,7 @@ public class PantryFragment extends Fragment {
                     boolean isInserted = IngredDatabase.insertIngredient(arrayList.get(i).toString());
                     if(isInserted == true)
                         Toast.makeText(getContext(), "Item Inserted Into Pantry", Toast.LENGTH_SHORT).show();
+
                     else
                         Toast.makeText(getContext(), "Item Already In Pantry", Toast.LENGTH_SHORT).show();
 
@@ -108,8 +121,53 @@ public class PantryFragment extends Fragment {
         });
 
 
+        createCheckBox();
+
+
+
 
         return root;
     }
+
+    private void createCheckBox() {
+
+
+
+       checkBox = new CheckBox[5];
+
+
+        //Toast.makeText(getContext(), "create check box",Toast.LENGTH_SHORT).show();
+
+        SharedPreferences myPrefs;
+        SharedPreferences.Editor myPrefsPrefsEditor;
+        final String MY_SHARED_PREF = "isclicked";
+
+
+        myPrefs = getContext().getSharedPreferences(MY_SHARED_PREF, Context.MODE_PRIVATE);
+
+        for(int i=0; i<5; i++) {
+
+
+            checkBox[i] = new CheckBox(getContext());
+            checkBox[i].setText("aaa");
+            checkBox[i].setId(i + 100);
+
+
+            myPrefsPrefsEditor = myPrefs.edit();
+            myPrefsPrefsEditor.putBoolean("isclicked", checkBox[i].isChecked());
+            myPrefsPrefsEditor.commit();
+
+            radioGroup.addView(checkBox[i]);
+
+            myPrefs.getBoolean("isclicked", checkBox[i].isChecked());
+        }
+        if (checkBox[0].isChecked()) {
+
+            Toast.makeText(getContext(), "create check box",Toast.LENGTH_SHORT).show();
+
+        }
+
+    }
+
 
 }

@@ -1,4 +1,4 @@
-package com.example.gossettsamantha.test.ui.home;
+package com.example.gossettsamantha.test.ui.profile;
 
 import android.database.Cursor;
 
@@ -9,20 +9,20 @@ import com.example.gossettsamantha.test.R;
 import java.util.ArrayList;
 import java.util.stream.Stream;
 
-public class MyListItem extends ArrayList<String> {
+public class mPantryListItem extends ArrayList<String> {
     private String name;
     private String desc;
     private int imageViewDrawable;
 
     private int i;
 
-    public MyListItem() {
+    public mPantryListItem() {
         name = "name";
         desc = "desc";
         imageViewDrawable = R.drawable.chickenench;
     }
 
-    public MyListItem(String name, String desc, int imageViewDrawable) {
+    public mPantryListItem(String name, String desc, int imageViewDrawable) {
         this.name = name;
         this.desc = desc;
         this.imageViewDrawable= imageViewDrawable;
@@ -47,9 +47,9 @@ public class MyListItem extends ArrayList<String> {
         return imageViewDrawable;
     }
 
-    public static MyListItem fromCursor(Cursor cursor) {
+    public static mPantryListItem fromCursor(Cursor cursor) {
         //TODO return your mPantryListItem from cursor.
-        return MyListItem.fromCursor(cursor);
+        return mPantryListItem.fromCursor(cursor);
     }
 
     @NonNull

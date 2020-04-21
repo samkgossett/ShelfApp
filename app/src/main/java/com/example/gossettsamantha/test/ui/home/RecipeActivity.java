@@ -61,12 +61,16 @@ public class RecipeActivity extends Activity {
         TextView matchP = (TextView) findViewById(R.id.percentMatch);
         matchP.setText("Match percentage: " + matchId +"%");
 
+        createIngredientsList();
+        createInstructionsList();
 
-        /********************************************************************************************************/
-                                              /*  INGREDIENTS    */
+    }
+
+
+
+    private void createIngredientsList() {
 
         final ListView ingredientsLv = (ListView) findViewById(R.id.ingredientsListView);
-
         // Initializing a new String Array
         String[] ingredients = new String[] {};
 
@@ -109,7 +113,7 @@ public class RecipeActivity extends Activity {
                 //get columns
 
                 do {
-                    if((recipeId == ingrRecCursor.getInt(recId)) ) {
+                    if(((Integer) getIntent().getExtras().get(EXTRA_RECIPEID) == ingrRecCursor.getInt(recId)) ) {
 
                         if (ingCursor != null && ingCursor.moveToFirst()) {
 
@@ -172,10 +176,9 @@ public class RecipeActivity extends Activity {
                 Toast.makeText(getApplicationContext(), "ing button clicked!",Toast.LENGTH_SHORT).show();
             }
         });
+    }
 
-/********************************************************************************************************/
-                                            /*  INSTRUCTIONS   */
-
+    private void createInstructionsList() {
         final ListView instructionsLv = (ListView) findViewById(R.id.instructionsListView);
 
         String[] instructions = new String[] {};
@@ -186,7 +189,7 @@ public class RecipeActivity extends Activity {
             SQLiteOpenHelper recipeDatabaseHelper = new RecipeDatabaseHelper(this);
             db = recipeDatabaseHelper.getReadableDatabase();
 
-      instrCursor = db.query("INSTRUCTION",
+            instrCursor = db.query("INSTRUCTION",
                     new String[]{"ID", "RECIPE_ID", "INSTRUCTION"},
                     null,
                     null,
@@ -203,7 +206,7 @@ public class RecipeActivity extends Activity {
 
                 int i= 0 ;
                 do {
-                    if((recipeId == instrCursor.getInt(recId)) ) {
+                    if(((Integer) getIntent().getExtras().get(EXTRA_RECIPEID) == instrCursor.getInt(recId)) ) {
                         instr[i]= instrCursor.getString(instruction);
                         instructions_list.add(instr[i]);
                         i++;
@@ -246,9 +249,6 @@ public class RecipeActivity extends Activity {
                 });
 
     }
-
-
-
 
 }
 
