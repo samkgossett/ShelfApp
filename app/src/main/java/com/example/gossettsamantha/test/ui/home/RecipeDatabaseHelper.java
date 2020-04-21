@@ -383,10 +383,6 @@ public class RecipeDatabaseHelper extends SQLiteOpenHelper {
 
         if (oldVersion < 2) {
             db.execSQL("ALTER TABLE DRINK ADD COLUMN FAVORITE NUMERIC;");
-            db.execSQL("ALTER TABLE INGREDIENT ADD COLUMN FAVORITE NUMERIC;");
-            db.execSQL("ALTER TABLE INGREDIENT_RECIPE ADD COLUMN FAVORITE NUMERIC;");
-            db.execSQL("ALTER TABLE AMOUNT ADD COLUMN FAVORITE NUMERIC;");
-            db.execSQL("ALTER TABLE INSTRUCTION ADD COLUMN FAVORITE NUMERIC;");
         }
     }
 

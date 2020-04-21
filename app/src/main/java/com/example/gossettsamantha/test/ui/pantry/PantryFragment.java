@@ -46,7 +46,7 @@ public class PantryFragment extends Fragment {
     private  RadioGroup radioGroup;
     private CheckBox checkBox[];
     ListView ingredientsList;
-    Button homeB, foodB, profileB, recipesB;
+    Button homeB, foodB;
     int click = 0;
     private Cursor ingCursor;
     private  ArrayAdapter arrayAdapter;
@@ -74,57 +74,6 @@ public class PantryFragment extends Fragment {
             foodB = root.findViewById(R.id.food);
 
 
-
-/*
-            if (arrayList.isEmpty()) {
-                Toast.makeText(getContext(), "No Ingredients", Toast.LENGTH_SHORT).show();
-
-            }
-
- */
-            //Array Adapter creates String array for the List View
-            /*
-
-            //Adds the strings to database when item is clicked in list-view
-            ingredientsList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-                @Override
-                public void onItemClick(AdapterView<?> parent, View view, final int i, long id) {
-                    click++;
-
-                    Handler handler = new Handler();
-                    Runnable runnable = new Runnable() {
-                        @Override
-                        public void run() {
-                            click = 0;
-                        }
-                    };
-
-                    //If/else statement shows if items is clicked once or twice
-                    //one clicked will add item to the database
-                    if (click == 1) {
-                        handler.postDelayed(runnable, 400);
-
-                        //if/else statement shows whether the item was added and then actually implements the insert method
-                        boolean isInserted = IngredDatabase.insertIngredient(arrayList.get(i).toString());
-                        if (isInserted == true)
-                            Toast.makeText(getContext(), "Item Inserted Into Pantry", Toast.LENGTH_SHORT).show();
-                        else
-                            Toast.makeText(getContext(), "Item Already In Pantry", Toast.LENGTH_SHORT).show();
-
-                        //click twice means the item is deleted from the database
-                    } else if (click == 2) {
-
-                        IngredDatabase.deleteIngredients(arrayList.get(i).toString());
-                        Toast.makeText(getContext(), "Item Deleted From Pantry", Toast.LENGTH_SHORT).show();
-
-                    } else
-                        click = 0;
-
-                }
-            });
-
-
-             */
             //takes the user back to the home page
 
 
@@ -149,7 +98,6 @@ public class PantryFragment extends Fragment {
 
             return root;
         }
-
 
     private void createCheckBox() {
 
@@ -188,7 +136,7 @@ public class PantryFragment extends Fragment {
                         checkBox[i].setId(i);
                         arrayList.add((String) checkBox[i].getText());
                         radioGroup.addView(checkBox[i]);
-                        //Toast.makeText(getContext(), "if this works ur a genuis " , Toast.LENGTH_SHORT).show();
+                        //Toast.makeText(getContext(), "if this wokrs ur big brain " , Toast.LENGTH_SHORT).show();
                         checkBox[i].setChecked(true);
 
                     }
@@ -221,14 +169,7 @@ public class PantryFragment extends Fragment {
             db.update("INGREDIENT", cv, null , null);
 
 
-            /*
-             if (checkBox[x].getId() == ingCursor.getInt(0)){
-                    Toast.makeText(getContext(), " " + checkBox[x].getId() + ingCursor.getInt(0) , Toast.LENGTH_SHORT).show();
-
-                }
-             */
             if (ingCursor != null && ingCursor.moveToFirst()) {
-
 
                 int x = 0;
                 do {
@@ -236,11 +177,6 @@ public class PantryFragment extends Fragment {
 
 
                             db.execSQL("UPDATE INGREDIENT SET USER_OWNS='1' WHERE INGREDIENT_ID = "+ ingCursor.getInt(ingId)  );
-
-                            //db.update("INGREDIENT", cv2, "INGREDIENTNAME ="+ ingCursor.getString(ingredient) , null);
-
-                            //Toast.makeText(getContext(),  " " + checkBox[x].getText() + " " + ingCursor.getString(ingredient) , Toast.LENGTH_SHORT).show();
-
                             arrayList.add((String) checkBox[x].getText());
                             arrayAdapter.notifyDataSetChanged();
 
@@ -248,15 +184,6 @@ public class PantryFragment extends Fragment {
                     x++;
 
                 } while ( ingCursor.moveToNext());
-
-
-
-
-
     }
-
-
-
-
 }}
 

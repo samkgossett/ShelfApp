@@ -3,11 +3,14 @@ package com.example.gossettsamantha.test.ui.home;
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.database.sqlite.SQLiteException;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -20,8 +23,24 @@ import com.example.gossettsamantha.test.MainActivity;
 import com.example.gossettsamantha.test.R;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 public class HomeFragment extends Fragment  {
+
+    public static final String EXTRA_RECIPEID = "recipeId";
+    public static final String EXTRA_RECIPENAME = "name";
+    public static final String EXTRA_RECIPEDESC = "desc" ;
+    public static final String EXTRA_RECIPEIMAGE = "image";
+    public static final String EXTRA_RECIPEMATCH = "match";
+    private Cursor instrCursor;
+    int recipeId;
+    private Cursor ingrRecCursor;
+    private Cursor ingCursor;
+    private Cursor amountCursor;
+    private Cursor recipeCursor;
+    private  double match;
+
 
     private HomeViewModel homeViewModel;
     private ArrayList<MyListItem> list;
@@ -30,7 +49,7 @@ public class HomeFragment extends Fragment  {
     private LinearLayoutManager linearLayoutManager;
     private SQLiteDatabase db;
     private Cursor cursor;
-
+    private  String[] thisMatch;
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater,
@@ -42,7 +61,19 @@ public class HomeFragment extends Fragment  {
 
         recyclerView = root.findViewById(R.id.recyclerView);
 
+        SQLiteOpenHelper recipeDatabaseHelper = new RecipeDatabaseHelper(getContext());
 
+
+
+
+        createRecipeEnteries();
+
+        return root;
+    }
+
+
+
+    private void createRecipeEnteries() {
         SQLiteOpenHelper recipeDatabaseHelper = new RecipeDatabaseHelper(getContext());
         db = recipeDatabaseHelper.getReadableDatabase();
 
@@ -51,17 +82,15 @@ public class HomeFragment extends Fragment  {
         final ArrayList<MyListItem> list = new ArrayList();
 
         final String[] thisTitle = new String[100];
-        final String[] thisMatch = new String[100];
+        thisMatch = new String[100];
         final String[] thisDesc = new String[100];
         final int[] thisPicture = new int[100];
         final int[] thisId = new int[100];
 
 
-
         cursor = db.query("DRINK",
                 new String[]{"_id", "ID", "NAME", "MATCH_PERCENTAGE", "DESCRIPTION", "IMAGE_RESOURCE_ID"},
                 null, null, null, null, "MATCH_PERCENTAGE DESC");
-
 
         if (cursor != null && cursor.moveToFirst()) {
             //get columns
@@ -71,6 +100,8 @@ public class HomeFragment extends Fragment  {
             int matchColumn = cursor.getColumnIndex("MATCH_PERCENTAGE");
             int pictureColumn = cursor.getColumnIndex("IMAGE_RESOURCE_ID");
             int idColumn = cursor.getColumnIndex("ID");
+
+
 
             int i = 0;
             do {
@@ -82,6 +113,7 @@ public class HomeFragment extends Fragment  {
                 thisId[i] = cursor.getInt(idColumn);
 
                 MyListItem items = new MyListItem(thisTitle[i], "Match percentage: " + thisMatch[i] +"%",  thisPicture[i]);
+                //Toast.makeText(getContext(),  " " + cursor.getString(matchColumn) ,Toast.LENGTH_SHORT).show();
 
                 list.add(items);
                 i++;
@@ -89,7 +121,10 @@ public class HomeFragment extends Fragment  {
             while (cursor.moveToNext());
 
             cursor.close();
+
         }
+
+
 
         linearLayoutManager = new LinearLayoutManager(getContext());
         adapter = new myAdapter(getContext(), list);
@@ -113,9 +148,8 @@ public class HomeFragment extends Fragment  {
             }
         });
 
-        return root;
-
     }
+
 
     @Override
     public void onDestroy(){

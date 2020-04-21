@@ -31,9 +31,13 @@ public class RecipeActivity extends Activity {
     public static final String EXTRA_RECIPEIMAGE = "image";
     public static final String EXTRA_RECIPEMATCH = "match";
     private Cursor instrCursor;
+    int recipeId;
     private Cursor ingrRecCursor;
     private Cursor ingCursor;
     private Cursor amountCursor;
+    private ArrayList<Double> thisMatch[];
+    private Cursor recipeCursor;
+    private  double match;
 
     private SQLiteDatabase db;
 
@@ -43,7 +47,7 @@ public class RecipeActivity extends Activity {
         setContentView(R.layout.activity_recipe);
         //Get the recipe from the intent
 
-        int recipeId = (Integer) getIntent().getExtras().get(EXTRA_RECIPEID);
+        recipeId = (Integer) getIntent().getExtras().get(EXTRA_RECIPEID);
 
         String nameId = (String) getIntent().getExtras().get(EXTRA_RECIPENAME);
         TextView name = (TextView) findViewById(R.id.name);
@@ -57,16 +61,25 @@ public class RecipeActivity extends Activity {
         ImageView photo = (ImageView) findViewById(R.id.photo);
         photo.setImageResource(photoId);
 
-        String matchId = (String) getIntent().getExtras().get(EXTRA_RECIPEMATCH);
-        TextView matchP = (TextView) findViewById(R.id.percentMatch);
-        matchP.setText("Match percentage: " + matchId +"%");
+        thisMatch = new ArrayList[100];
 
         createIngredientsList();
         createInstructionsList();
 
+
     }
 
+public void onBackPressed() {
+    super.onBackPressed();
 
+    Intent intent = new Intent(this, HomeFragment.class);
+    intent.putExtra(RecipeActivity.EXTRA_RECIPEMATCH, thisMatch);
+    startActivity(intent);
+    Toast.makeText(this, "backpressed" ,Toast.LENGTH_SHORT).show();
+
+    finish();
+
+}
 
     private void createIngredientsList() {
 
@@ -79,6 +92,9 @@ public class RecipeActivity extends Activity {
         try {
             SQLiteOpenHelper recipeDatabaseHelper = new RecipeDatabaseHelper(this);
             db = recipeDatabaseHelper.getReadableDatabase();
+
+
+
             ingrRecCursor = db.query("INGREDIENT_RECIPE",
                     new String[]{"INGREDIENT_ID", "RECIPE_ID", "AMOUNT_ID"},
                     null,
@@ -111,7 +127,8 @@ public class RecipeActivity extends Activity {
             int amount = amountCursor.getColumnIndex("AMOUNT");
 
 
-            int ingredientTotal = 0;
+            double ingredientTotal = 0;
+            double ingredientOwned = 0;
 
             if (ingrRecCursor != null && ingrRecCursor.moveToFirst()) {
                 //get columns
@@ -120,6 +137,7 @@ public class RecipeActivity extends Activity {
                     if(((Integer) getIntent().getExtras().get(EXTRA_RECIPEID) == ingrRecCursor.getInt(recId)) ) {
 
                         if (ingCursor != null && ingCursor.moveToFirst()) {
+
 
                             do {
 
@@ -140,26 +158,63 @@ public class RecipeActivity extends Activity {
 
                                                 ingredientTotal++;
 
+
                                             }
+
 
                                         }while( amountCursor.moveToNext());
                                     }
+
+
+                                    if (ingCursor.getInt(userOwns) == 1 ) {
+
+                                        ingredientOwned++;
+                                    }
+
+                                    //Toast.makeText(this, "match = " + match + " = " + ingredientOwned + " / " +ingredientTotal  ,Toast.LENGTH_SHORT).show();
+
+                                    match = ingredientOwned/ingredientTotal;
+                                    match = match*100;
+                                    db.execSQL("UPDATE DRINK SET MATCH_PERCENTAGE = " + match + " WHERE ID = "+  ingrRecCursor.getInt(recId)  );
+
+
+
                                 }
+                                //Toast.makeText(this,  " " + ingrRecCursor.getInt(recId) + " " + recipeId ,Toast.LENGTH_SHORT).show();
+
                             } while (ingCursor.moveToNext());
+
                         }
+
                     }
                 }
+
                 while (ingrRecCursor.moveToNext());
+
+
                 ingrRecCursor.close();
+
+
             }
 
-            Toast.makeText(this, "ingredient total = " + ingredientTotal,Toast.LENGTH_SHORT).show();
+            match = ingredientOwned/ingredientTotal;
+            match = match*100;
 
+            //Toast.makeText(this, "match = " + match + " = " + ingredientOwned + " / " +ingredientTotal  ,Toast.LENGTH_SHORT).show();
+            TextView matchP = (TextView) findViewById(R.id.percentMatch);
+            matchP.setText("Match percentage: " + match);
 
         } catch(SQLiteException e) {
             Toast toast = Toast.makeText(this, "SQLiteException for Ingredients db", Toast.LENGTH_SHORT);
             toast.show();
         }
+
+        //String matchId = (String) getIntent().getExtras().get(EXTRA_RECIPEMATCH);
+
+
+
+
+
 
         final ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>
                 (this, android.R.layout.simple_list_item_1, ingredients_list);
@@ -190,6 +245,9 @@ public class RecipeActivity extends Activity {
             }
         });
     }
+
+
+
 
     private void createInstructionsList() {
         final ListView instructionsLv = (ListView) findViewById(R.id.instructionsListView);
