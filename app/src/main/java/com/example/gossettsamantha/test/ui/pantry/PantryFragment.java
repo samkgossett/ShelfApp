@@ -1,5 +1,6 @@
 package com.example.gossettsamantha.test.ui.pantry;
 
+import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -49,8 +50,10 @@ public class PantryFragment extends Fragment {
     Button homeB, foodB, profileB, recipesB;
     int click = 0;
     private Cursor ingCursor;
+    private  ArrayAdapter arrayAdapter;
     private SQLiteDatabase db;
     private LinearLayout linLay;
+    final ArrayList<String> arrayList = new ArrayList<>();
 
 
     public View onCreateView(@NonNull LayoutInflater inflater,
@@ -71,8 +74,10 @@ public class PantryFragment extends Fragment {
             profileB = root.findViewById(R.id.profile);
             homeB = root.findViewById(R.id.home);
 
+
+
+            /*
             //Ingredients added to the List-View
-            final ArrayList<String> arrayList = new ArrayList<>();
             arrayList.add("Apples, Fuji");
             arrayList.add("Bacon, Maple");
             arrayList.add("Beef, Ground");
@@ -88,9 +93,10 @@ public class PantryFragment extends Fragment {
             arrayList.add("Tomato's, Fresh");
 
 
+             */
+
             //Array Adapter creates String array for the List View
-            ArrayAdapter arrayAdapter = new ArrayAdapter(getContext(), android.R.layout.simple_list_item_1, arrayList);
-            ingredientsList.setAdapter(arrayAdapter);
+            /*
 
             //Adds the strings to database when item is clicked in list-view
             ingredientsList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -130,6 +136,8 @@ public class PantryFragment extends Fragment {
                 }
             });
 
+
+             */
             //takes the user back to the home page
             homeB.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -144,7 +152,7 @@ public class PantryFragment extends Fragment {
             foodB.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Toast.makeText(getContext(), "Already on Food Page", Toast.LENGTH_SHORT).show();
+                    addIngredients();
                 }
             });
 
@@ -154,6 +162,10 @@ public class PantryFragment extends Fragment {
 
 
         createCheckBox();
+
+        arrayAdapter = new ArrayAdapter(getContext(), android.R.layout.simple_list_item_1, arrayList);
+
+        ingredientsList.setAdapter(arrayAdapter);
 
             return root;
         }
@@ -165,7 +177,6 @@ public class PantryFragment extends Fragment {
 
 
     private void createCheckBox() {
-
 
 
         checkBox = new CheckBox[25];
@@ -202,13 +213,14 @@ public class PantryFragment extends Fragment {
                 int i = 0;
                 do {
 
-                    if( (ingCursor.getInt(userOwns)) == 0) {
+                    if ((ingCursor.getInt(userOwns)) == 1) {
+                        arrayList.add("Aaaaaaa");
+                        //Toast.makeText(getContext(), "if this works u won bitch" + ingCursor.getCount(), Toast.LENGTH_SHORT).show();
 
                     }
                     checkBox[i] = new CheckBox(getContext());
                     checkBox[i].setText(ingCursor.getString(ingredient));
                     checkBox[i].setId(i);
-
 
                     myPrefsPrefsEditor = myPrefs.edit();
                     myPrefsPrefsEditor.putBoolean("isclicked", checkBox[i].isChecked());
@@ -218,18 +230,42 @@ public class PantryFragment extends Fragment {
 
                     myPrefs.getBoolean("isclicked", checkBox[i].isChecked());
                     i++;
-                }while (ingCursor.moveToNext());
+                } while (ingCursor.moveToNext());
 
-                }
+            }
 
 
-        } catch(SQLiteException e) {
+        } catch (SQLiteException e) {
             Toast toast = Toast.makeText(getContext(), "SQLiteException for Ingred db", Toast.LENGTH_SHORT);
             toast.show();
         }
+    }
+        public void addIngredients() {
 
+                for (int x = 0; x < ingCursor.getCount(); x++) {
+
+                if(checkBox[x].isChecked()) {
+                    Toast.makeText(getContext(), " " + checkBox[x].getText() , Toast.LENGTH_SHORT).show();
+
+/*
+
+                    String where = "USER_OWNS=" + 0 + "AND" + checkBox[x].getId() + "= INGREDIENT_ID";
+                    ContentValues args = new ContentValues();
+                            args.put("USER_OWNS", 1);
+                    db.update("INGREDIENTS", args, where, null);
+
+ */
+                    //myDB.update("titles", args, strFilter, null);
+
+                   // db.execSQL("UPDATE INGREDIENTS ;");
+
+                    arrayList.add((String) checkBox[x].getText());
+                   // arrayList.add(checkBox[x].getText());
+                    arrayAdapter.notifyDataSetChanged();
+                }
 
 
 
     }
+}
 }
