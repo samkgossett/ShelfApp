@@ -245,9 +245,6 @@ public class RecipeDatabaseHelper extends SQLiteOpenHelper {
             insertIngredient(db, 38,  0,"Sesame Seeds");
             insertIngredient(db, 39,  0,"White chocolate");
 
-
-
-
             db.execSQL("CREATE TABLE AMOUNT (_id INTEGER PRIMARY KEY AUTOINCREMENT, "
                     + "AMOUNT_ID, "
                     + "AMOUNT);");

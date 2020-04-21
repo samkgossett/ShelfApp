@@ -92,11 +92,12 @@ public class RecipeActivity extends Activity {
             int inReAmountId = ingrRecCursor.getColumnIndex("AMOUNT_ID");
 
             ingCursor = db.query("INGREDIENT",
-                    new String[]{"INGREDIENT_ID", "INGREDIENTNAME"},
+                    new String[]{"INGREDIENT_ID", "INGREDIENTNAME", "USER_OWNS"},
                     null,
                     null,
                     null, null, null);
 
+            int userOwns = ingCursor.getColumnIndex("USER_OWNS");
             int ingId = ingCursor.getColumnIndex("INGREDIENT_ID");
             int ingredient = ingCursor.getColumnIndex("INGREDIENTNAME");
 
@@ -108,6 +109,9 @@ public class RecipeActivity extends Activity {
 
             int amountId = amountCursor.getColumnIndex("AMOUNT_ID");
             int amount = amountCursor.getColumnIndex("AMOUNT");
+
+
+            int ingredientTotal = 0;
 
             if (ingrRecCursor != null && ingrRecCursor.moveToFirst()) {
                 //get columns
@@ -127,9 +131,15 @@ public class RecipeActivity extends Activity {
                                             int i = 0;
 
                                             if ((ingrRecCursor.getInt(inReAmountId) == amountCursor.getInt(amountId))) {
+
+
                                                 ingr[i] =  amountCursor.getString(amount)  + " " + ingCursor.getString(ingredient);
+
                                                 ingredients_list.add(ingr[i]);
                                                 i++;
+
+                                                ingredientTotal++;
+
                                             }
 
                                         }while( amountCursor.moveToNext());
@@ -142,6 +152,9 @@ public class RecipeActivity extends Activity {
                 while (ingrRecCursor.moveToNext());
                 ingrRecCursor.close();
             }
+
+            Toast.makeText(this, "ingredient total = " + ingredientTotal,Toast.LENGTH_SHORT).show();
+
 
         } catch(SQLiteException e) {
             Toast toast = Toast.makeText(this, "SQLiteException for Ingredients db", Toast.LENGTH_SHORT);

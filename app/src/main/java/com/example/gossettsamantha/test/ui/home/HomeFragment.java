@@ -31,6 +31,7 @@ public class HomeFragment extends Fragment  {
     private SQLiteDatabase db;
     private Cursor cursor;
 
+
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -55,9 +56,12 @@ public class HomeFragment extends Fragment  {
         final int[] thisPicture = new int[100];
         final int[] thisId = new int[100];
 
+
+
         cursor = db.query("DRINK",
                 new String[]{"_id", "ID", "NAME", "MATCH_PERCENTAGE", "DESCRIPTION", "IMAGE_RESOURCE_ID"},
                 null, null, null, null, "MATCH_PERCENTAGE DESC");
+
 
         if (cursor != null && cursor.moveToFirst()) {
             //get columns

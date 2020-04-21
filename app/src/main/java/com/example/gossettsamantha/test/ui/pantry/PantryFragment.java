@@ -155,7 +155,7 @@ public class PantryFragment extends Fragment {
 
         arrayList.clear();
 
-        checkBox = new CheckBox[25];
+        checkBox = new CheckBox[100];
 
         //Toast.makeText(getContext(), "create check box",Toast.LENGTH_SHORT).show();
 
