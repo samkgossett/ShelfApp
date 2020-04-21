@@ -164,10 +164,6 @@ public class PantryFragment extends Fragment {
 
             arrayList.clear();
 
-            ContentValues cv = new ContentValues();
-            cv.put("USER_OWNS","0");
-            db.update("INGREDIENT", cv, null , null);
-
 
             if (ingCursor != null && ingCursor.moveToFirst()) {
 
