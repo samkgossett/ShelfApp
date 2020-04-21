@@ -45,7 +45,6 @@ public class PantryFragment extends Fragment {
 
     private  RadioGroup radioGroup;
     private CheckBox checkBox[];
-    DatabaseHelper IngredDatabase;
     ListView ingredientsList;
     Button homeB, foodB, profileB, recipesB;
     int click = 0;
@@ -68,7 +67,6 @@ public class PantryFragment extends Fragment {
         //Establishing variables
 
             //starts new Database
-            IngredDatabase = new DatabaseHelper(getContext());
             ingredientsList = root.findViewById(R.id.IngredientsList);
 
             //Variable Buttons for the toolbar and database buttons
