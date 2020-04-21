@@ -41,10 +41,10 @@ public class RecipeDatabaseHelper extends SQLiteOpenHelper {
         db.insert("DRINK", null, drinkValues);
     }
 
-    private static void insertIngredient(SQLiteDatabase db, int ingredientId, boolean userOwns, String ingredient) {
+    private static void insertIngredient(SQLiteDatabase db, int ingredientId, int userOwns, String ingredient) {
         ContentValues ingredientValues = new ContentValues();
         ingredientValues.put("INGREDIENT_ID", ingredientId);
-        ingredientValues.put("INGREDIENT", ingredient);
+        ingredientValues.put("INGREDIENTNAME", ingredient);
         ingredientValues.put("USER_OWNS", userOwns);
         db.insert("INGREDIENT", null, ingredientValues);
 
@@ -144,33 +144,33 @@ public class RecipeDatabaseHelper extends SQLiteOpenHelper {
             db.execSQL("CREATE TABLE INGREDIENT (_id INTEGER PRIMARY KEY AUTOINCREMENT, "
                     + "INGREDIENT_ID, "
                     + "USER_OWNS, "
-                    + "INGREDIENT);");
+                    + "INGREDIENTNAME);");
 
             //ingredient id to name
-            insertIngredient(db, 0, false,"vegetable oil");
-            insertIngredient(db, 1, false,"diced onion");
-            insertIngredient(db, 2,  false,"minced garlic");
-            insertIngredient(db, 3,  false,"chopped green chilies");
-            insertIngredient(db, 4,  false,"Mexican-style hot tomato sauce");
-            insertIngredient(db, 5,  false,"rotisserie chicken");
-            insertIngredient(db, 6,  false,"Neufchatel cheese");
-            insertIngredient(db, 7,  false,"Mexican cheese blend");
-            insertIngredient(db, 8,  false,"salt");
-            insertIngredient(db, 9,  false,"pepper");
-            insertIngredient(db, 10,  false,"corn tortillas");
-            insertIngredient(db, 11,  false,"avocado oil cooking spray");
-            insertIngredient(db, 12,  false,"cooking spray");
-            insertIngredient(db, 13,  false,"butter");
-            insertIngredient(db, 14,  false,"large onion");
-            insertIngredient(db, 15,  false,"white sugar");
-            insertIngredient(db, 16,  false,"medium apples");
-            insertIngredient(db, 17,  false,"Yukon Gold potatoes");
-            insertIngredient(db, 18,  false,"olive oil");
-            insertIngredient(db, 19,  false,"bone-in chicken thighs with skin");
-            insertIngredient(db, 20,  false,"chopped rosemary");
-            insertIngredient(db, 21,  false,"baby spinach leaves");
-            insertIngredient(db, 22,  false,"arugula");
-            insertIngredient(db, 23,  false,"garlic");
+            insertIngredient(db, 0, 0,"vegetable oil");
+            insertIngredient(db, 1, 0,"diced onion");
+            insertIngredient(db, 2,  0,"minced garlic");
+            insertIngredient(db, 3,  0,"chopped green chilies");
+            insertIngredient(db, 4,  0,"Mexican-style hot tomato sauce");
+            insertIngredient(db, 5,  0,"rotisserie chicken");
+            insertIngredient(db, 6,  0,"Neufchatel cheese");
+            insertIngredient(db, 7,  0,"Mexican cheese blend");
+            insertIngredient(db, 8,  0,"salt");
+            insertIngredient(db, 9,  0,"pepper");
+            insertIngredient(db, 10,  0,"corn tortillas");
+            insertIngredient(db, 11,  0,"avocado oil cooking spray");
+            insertIngredient(db, 12,  0,"cooking spray");
+            insertIngredient(db, 13,  0,"butter");
+            insertIngredient(db, 14,  0,"large onion");
+            insertIngredient(db, 15,  0,"white sugar");
+            insertIngredient(db, 16,  0,"medium apples");
+            insertIngredient(db, 17,  0,"Yukon Gold potatoes");
+            insertIngredient(db, 18,  0,"olive oil");
+            insertIngredient(db, 19,  0,"bone-in chicken thighs with skin");
+            insertIngredient(db, 20,  0,"chopped rosemary");
+            insertIngredient(db, 21,  0,"baby spinach leaves");
+            insertIngredient(db, 22,  0,"arugula");
+            insertIngredient(db, 23,  0,"garlic");
 
 
             db.execSQL("CREATE TABLE AMOUNT (_id INTEGER PRIMARY KEY AUTOINCREMENT, "

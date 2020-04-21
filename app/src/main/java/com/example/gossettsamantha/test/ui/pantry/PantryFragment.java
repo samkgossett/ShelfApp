@@ -53,6 +53,9 @@ public class PantryFragment extends Fragment {
     private  ArrayAdapter arrayAdapter;
     private SQLiteDatabase db;
     private LinearLayout linLay;
+    private int ingredient;
+    private int ingId;
+
     final ArrayList<String> arrayList = new ArrayList<>();
 
 
@@ -71,30 +74,16 @@ public class PantryFragment extends Fragment {
             //Variable Buttons for the toolbar and database buttons
 
             foodB = root.findViewById(R.id.food);
-            profileB = root.findViewById(R.id.profile);
-            homeB = root.findViewById(R.id.home);
 
 
 
-            /*
-            //Ingredients added to the List-View
-            arrayList.add("Apples, Fuji");
-            arrayList.add("Bacon, Maple");
-            arrayList.add("Beef, Ground");
-            arrayList.add("Cheese, Cheddar");
-            arrayList.add("Cheese, Swiss");
-            arrayList.add("Dates, Dried");
-            arrayList.add("Eggs");
-            arrayList.add("Fish, Flounder");
-            arrayList.add("Grapes");
-            arrayList.add("Hot-dogs");
-            arrayList.add("Jelly, Grape");
-            arrayList.add("Pickles, Dill");
-            arrayList.add("Tomato's, Fresh");
+/*
+            if (arrayList.isEmpty()) {
+                Toast.makeText(getContext(), "No Ingredients", Toast.LENGTH_SHORT).show();
 
+            }
 
-             */
-
+ */
             //Array Adapter creates String array for the List View
             /*
 
@@ -139,27 +128,20 @@ public class PantryFragment extends Fragment {
 
              */
             //takes the user back to the home page
-            homeB.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    openMainActivity();
-                    //Toast.makeText(ingredients.this, "Takes User to the Home Screen", Toast.LENGTH_SHORT).show();
-                }
 
-            });
 
             //Shows toast message that the user is already on the ingredients page
             foodB.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    addIngredients();
+
+                    updateIngredients();
                 }
             });
 
 
         radioGroup = (RadioGroup) root.findViewById(R.id.radioGroup);
         linLay = (LinearLayout) root.findViewById(R.id.linLay);
-
 
         createCheckBox();
 
@@ -170,39 +152,27 @@ public class PantryFragment extends Fragment {
             return root;
         }
 
-    private void openMainActivity() {
-        Intent intent = new Intent(getContext(), MainActivity.class);
-        startActivity(intent);
-    }
-
 
     private void createCheckBox() {
 
+        arrayList.clear();
 
         checkBox = new CheckBox[25];
 
-
         //Toast.makeText(getContext(), "create check box",Toast.LENGTH_SHORT).show();
-
-        SharedPreferences myPrefs;
-        SharedPreferences.Editor myPrefsPrefsEditor;
-        final String MY_SHARED_PREF = "isclicked";
-
-
-        myPrefs = getContext().getSharedPreferences(MY_SHARED_PREF, Context.MODE_PRIVATE);
 
         try {
             SQLiteOpenHelper recipeDatabaseHelper = new RecipeDatabaseHelper(getContext());
             db = recipeDatabaseHelper.getReadableDatabase();
 
             ingCursor = db.query("INGREDIENT",
-                    new String[]{"INGREDIENT_ID", "INGREDIENT", "USER_OWNS"},
+                    new String[]{"INGREDIENT_ID", "USER_OWNS", "INGREDIENTNAME"},
                     null,
                     null,
-                    null, null, null);
+                    null, null, "INGREDIENTNAME ASC");
 
-            int ingId = ingCursor.getColumnIndex("INGREDIENT_ID");
-            int ingredient = ingCursor.getColumnIndex("INGREDIENT");
+            ingId = ingCursor.getColumnIndex("INGREDIENT_ID");
+            ingredient = ingCursor.getColumnIndex("INGREDIENTNAME");
             int userOwns = ingCursor.getColumnIndex("USER_OWNS");
 
             //Toast.makeText(getContext(), " " + ingCursor.getCount(),Toast.LENGTH_SHORT).show();
@@ -212,23 +182,25 @@ public class PantryFragment extends Fragment {
 
                 int i = 0;
                 do {
+                    checkBox[i] = new CheckBox(getContext());
 
                     if ((ingCursor.getInt(userOwns)) == 1) {
-                        arrayList.add("Aaaaaaa");
-                        //Toast.makeText(getContext(), "if this works u won bitch" + ingCursor.getCount(), Toast.LENGTH_SHORT).show();
+
+                        checkBox[i].setText(ingCursor.getString(ingredient));
+                        checkBox[i].setId(i);
+                        arrayList.add((String) checkBox[i].getText());
+                        radioGroup.addView(checkBox[i]);
+                        //Toast.makeText(getContext(), "if this works ur a genuis " , Toast.LENGTH_SHORT).show();
+                        checkBox[i].setChecked(true);
 
                     }
-                    checkBox[i] = new CheckBox(getContext());
-                    checkBox[i].setText(ingCursor.getString(ingredient));
-                    checkBox[i].setId(i);
+                    else {
+                        checkBox[i].setText(ingCursor.getString(ingredient));
+                        checkBox[i].setId(i);
 
-                    myPrefsPrefsEditor = myPrefs.edit();
-                    myPrefsPrefsEditor.putBoolean("isclicked", checkBox[i].isChecked());
-                    myPrefsPrefsEditor.commit();
+                        radioGroup.addView(checkBox[i]);
+                    }
 
-                    radioGroup.addView(checkBox[i]);
-
-                    myPrefs.getBoolean("isclicked", checkBox[i].isChecked());
                     i++;
                 } while (ingCursor.moveToNext());
 
@@ -240,32 +212,53 @@ public class PantryFragment extends Fragment {
             toast.show();
         }
     }
-        public void addIngredients() {
 
-                for (int x = 0; x < ingCursor.getCount(); x++) {
 
-                if(checkBox[x].isChecked()) {
-                    Toast.makeText(getContext(), " " + checkBox[x].getText() , Toast.LENGTH_SHORT).show();
+        public void updateIngredients() {
 
-/*
+            arrayList.clear();
 
-                    String where = "USER_OWNS=" + 0 + "AND" + checkBox[x].getId() + "= INGREDIENT_ID";
-                    ContentValues args = new ContentValues();
-                            args.put("USER_OWNS", 1);
-                    db.update("INGREDIENTS", args, where, null);
+            ContentValues cv = new ContentValues();
+            cv.put("USER_OWNS","0");
+            db.update("INGREDIENT", cv, null , null);
 
- */
-                    //myDB.update("titles", args, strFilter, null);
 
-                   // db.execSQL("UPDATE INGREDIENTS ;");
+            /*
+             if (checkBox[x].getId() == ingCursor.getInt(0)){
+                    Toast.makeText(getContext(), " " + checkBox[x].getId() + ingCursor.getInt(0) , Toast.LENGTH_SHORT).show();
 
-                    arrayList.add((String) checkBox[x].getText());
-                   // arrayList.add(checkBox[x].getText());
-                    arrayAdapter.notifyDataSetChanged();
                 }
+             */
+            if (ingCursor != null && ingCursor.moveToFirst()) {
+
+
+                int x = 0;
+                do {
+                        if( ( checkBox[x].isChecked() ) && ( arrayList.contains((String) checkBox[x].getText()) != true)  ) {
+
+
+                            db.execSQL("UPDATE INGREDIENT SET USER_OWNS='1' WHERE INGREDIENT_ID = "+ ingCursor.getInt(ingId)  );
+
+                            //db.update("INGREDIENT", cv2, "INGREDIENTNAME ="+ ingCursor.getString(ingredient) , null);
+
+                            //Toast.makeText(getContext(),  " " + checkBox[x].getText() + " " + ingCursor.getString(ingredient) , Toast.LENGTH_SHORT).show();
+
+                            arrayList.add((String) checkBox[x].getText());
+                            arrayAdapter.notifyDataSetChanged();
+
+                        }
+                    x++;
+
+                } while ( ingCursor.moveToNext());
+
+
 
 
 
     }
-}
-}
+
+
+
+
+}}
+

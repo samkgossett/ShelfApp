@@ -9,6 +9,7 @@
 
 
     <LinearLayout
+        android:id="@+id/linearLayout2"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
@@ -43,63 +44,65 @@
             android:textSize="20dp"
             android:textStyle="bold" />
 
-        <ScrollView
-            android:layout_width="match_parent"
-            android:layout_height="257dp">
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical">
-
-                <RadioGroup
-                    android:id="@+id/radioGroup"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginEnd="0dp"
-                    android:layout_marginRight="0dp"
-                    android:layout_marginBottom="0dp"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
-            </LinearLayout>
-        </ScrollView>
-
         <ListView
             android:id="@+id/IngredientsList"
-            android:layout_width="272dp"
+            android:layout_width="match_parent"
+            android:layout_height="286dp"
+            android:layout_gravity="center">
 
-            android:layout_height="283dp"
-            android:layout_gravity="center"
-            android:layout_margin="15dp" />
+        </ListView>
 
         <LinearLayout
             android:id="@+id/linearLayout"
             android:layout_width="match_parent"
-            android:layout_height="43dp"
-            android:gravity="center"
+            android:layout_height="match_parent"
             android:layout_gravity="center"
-            android:layout_margin="1dp"
-            android:orientation="horizontal">
 
-            <Button
-                android:id="@+id/home"
-                android:layout_width="68dp"
-                android:layout_height="wrap_content"
-                android:text="Home" />
+            android:orientation="vertical">
 
             <Button
                 android:id="@+id/food"
-                android:layout_width="70dp"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Food" />
+                android:background="#65BD92"
+                android:fontFamily="sans-serif-smallcaps"
+                android:padding="5dp"
+                android:text="Select your ingredients below, then click here to update"
+                android:textColor="#1E1E1E"
+                android:textSize="20dp"
+                android:textStyle="bold" />
 
-            <Button
-                android:id="@+id/profile"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Profile" />
+            <ScrollView
+                android:layout_width="match_parent"
+                android:layout_height="310dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <RadioGroup
+                        android:id="@+id/radioGroup"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="0dp"
+                        android:layout_marginRight="0dp"
+                        android:layout_marginBottom="0dp"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+                </LinearLayout>
+            </ScrollView>
+
+            <TextView
+                android:id="@+id/padding"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="#009688"
+                android:text="TextView"
+                android:textColor="#009688" />
+
         </LinearLayout>
 
     </LinearLayout>

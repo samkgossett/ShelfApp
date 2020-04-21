@@ -92,13 +92,13 @@ public class RecipeActivity extends Activity {
             int inReAmountId = ingrRecCursor.getColumnIndex("AMOUNT_ID");
 
             ingCursor = db.query("INGREDIENT",
-                    new String[]{"INGREDIENT_ID", "INGREDIENT"},
+                    new String[]{"INGREDIENT_ID", "INGREDIENTNAME"},
                     null,
                     null,
                     null, null, null);
 
             int ingId = ingCursor.getColumnIndex("INGREDIENT_ID");
-            int ingredient = ingCursor.getColumnIndex("INGREDIENT");
+            int ingredient = ingCursor.getColumnIndex("INGREDIENTNAME");
 
             amountCursor = db.query("AMOUNT",
                     new String[]{"AMOUNT_ID", "AMOUNT"},

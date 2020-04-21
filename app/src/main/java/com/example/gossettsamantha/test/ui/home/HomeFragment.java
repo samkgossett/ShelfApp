@@ -49,11 +49,11 @@ public class HomeFragment extends Fragment  {
         //this allows the recipe activity page to open to the correct items
         final ArrayList<MyListItem> list = new ArrayList();
 
-        final String[] thisTitle = new String[20];
-        final String[] thisMatch = new String[20];
-        final String[] thisDesc = new String[20];
-        final int[] thisPicture = new int[20];
-        final int[] thisId = new int[20];
+        final String[] thisTitle = new String[100];
+        final String[] thisMatch = new String[100];
+        final String[] thisDesc = new String[100];
+        final int[] thisPicture = new int[100];
+        final int[] thisId = new int[100];
 
         cursor = db.query("DRINK",
                 new String[]{"_id", "ID", "NAME", "MATCH_PERCENTAGE", "DESCRIPTION", "IMAGE_RESOURCE_ID"},
