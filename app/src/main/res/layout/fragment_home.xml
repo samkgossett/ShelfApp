@@ -53,16 +53,16 @@
             android:layout_marginTop="1dp"
             android:contextClickable="true">
 
+
         </androidx.recyclerview.widget.RecyclerView>
 
-        <ListView
-            android:id="@+id/recipe_list"
+        <TextView
+            android:id="@+id/padding"
             android:layout_width="match_parent"
-            android:layout_height="254dp">
-
-        </ListView>
-
-
+            android:layout_height="80dp"
+            android:background="#009688"
+            android:text="TextView"
+            android:textColor="#009688" />
     </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

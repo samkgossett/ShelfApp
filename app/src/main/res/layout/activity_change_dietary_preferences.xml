@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:background="#65BD92"
+    tools:context=".ui.profile.ChangeDietaryPreferences"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">>
+
+        <TextView
+            android:id="@+id/textView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Please Select Your Dietary Prefences:"
+            android:textSize="15pt"
+            android:textStyle="bold" />
+
+        <RadioGroup
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+            <CheckBox
+                android:id="@+id/checkNutAllergy"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Nut Allergy" />
+
+            <CheckBox
+                android:id="@+id/checkVegan"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Vegan" />
+
+            <CheckBox
+                android:id="@+id/checkVegetarian"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Vegetarian" />
+
+            <CheckBox
+                android:id="@+id/checkGluten"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Gluten Free" />
+
+            <CheckBox
+                android:id="@+id/checkLactoseIntolerant"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Lactose Intolerant" />
+
+        </RadioGroup>
+
+        <Button
+            android:id="@+id/finishEdit"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="SAVE" />
+
+    </LinearLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

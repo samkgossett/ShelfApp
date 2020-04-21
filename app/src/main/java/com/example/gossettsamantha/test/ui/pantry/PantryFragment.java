@@ -88,7 +88,6 @@ public class PantryFragment extends Fragment {
 
 
         radioGroup = (RadioGroup) root.findViewById(R.id.radioGroup);
-        linLay = (LinearLayout) root.findViewById(R.id.linLay);
 
         createCheckBox();
 
