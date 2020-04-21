@@ -122,7 +122,7 @@ public class RecipeDatabaseHelper extends SQLiteOpenHelper {
             //Rosemary Roasted
             insertIngredientRecipeTable(db, 1, 12, 15);
             insertIngredientRecipeTable(db, 1, 13, 6);
-            insertIngredientRecipeTable(db, 1, 14, 31);
+            insertIngredientRecipeTable(db, 1, 14, 51);
             insertIngredientRecipeTable(db, 1, 8,16);
             insertIngredientRecipeTable(db, 1, 15,3);
             insertIngredientRecipeTable(db, 1, 16,32);
@@ -136,7 +136,6 @@ public class RecipeDatabaseHelper extends SQLiteOpenHelper {
             //Easy Spinach
             insertIngredientRecipeTable(db, 2, 21,12);
             insertIngredientRecipeTable(db, 2, 22,12);
-            insertIngredientRecipeTable(db, 2, 23,35);
             insertIngredientRecipeTable(db, 2, 19,21);
             insertIngredientRecipeTable(db, 2, 8,34);
 
@@ -351,30 +350,30 @@ public class RecipeDatabaseHelper extends SQLiteOpenHelper {
             insertInstruction(db, 27, 5, "3. Combine chicken, onion mixture, cheese blend, cream cheese, salsa verde, olives, cilantro, and jalapenos in a large bowl for the filling. Mix well.");
             insertInstruction(db, 28, 5, "4. Melt butter in a saucepan over medium heat. Stir in flour, then chicken broth. Cook until sauce starts to thicken, 6 to 8 minutes. Stir in sour cream and salsa verde; cook until heated through. Spread a spoonful of sauce over the bottoms of two 9x11-inch casserole dishes.");
             insertInstruction(db, 29, 5, "5. Wrap a tortilla in a damp paper towel and microwave for about 30 seconds. Fill with the chicken mixture, roll up, and place seam-side down into a baking dish. Repeat with remaining tortillas until each dish holds 8 enchiladas.");
-            insertInstruction(db, 29, 2, "6. Spoon remaining sauce over the enchiladas. Sprinkle cheese on top.");
-            insertInstruction(db, 29, 5, "7. Bake in the preheated oven until heated through, about 20 minutes.");
+            insertInstruction(db, 30, 5, "6. Spoon remaining sauce over the enchiladas. Sprinkle cheese on top.");
+            insertInstruction(db, 31, 5, "7. Bake in the preheated oven until heated through, about 20 minutes.");
 
             //Simple Nashville Hot Chicken Biscuits
-            insertInstruction(db, 29, 6, "1. Preheat the oven to 350 degrees F (175 degrees C). Place biscuits 1 inch apart on an ungreased baking sheet.");
-            insertInstruction(db, 30, 6, "2. Bake in the preheated oven until golden brown, 13 to 17 minutes. Set aside.");
-            insertInstruction(db, 31, 6, "3. Mix buttermilk, egg, sriracha, salt, garlic powder, and cayenne pepper together in a shallow bowl. Mix flour and chicken and pork rub together in a separate shallow bowl. Dip chicken into buttermilk mixture then dredge in flour mixture; shake off excess.");
+            insertInstruction(db, 32, 6, "1. Preheat the oven to 350 degrees F (175 degrees C). Place biscuits 1 inch apart on an ungreased baking sheet.");
+            insertInstruction(db, 33, 6, "2. Bake in the preheated oven until golden brown, 13 to 17 minutes. Set aside.");
+            insertInstruction(db, 34, 6, "3. Mix buttermilk, egg, sriracha, salt, garlic powder, and cayenne pepper together in a shallow bowl. Mix flour and chicken and pork rub together in a separate shallow bowl. Dip chicken into buttermilk mixture then dredge in flour mixture; shake off excess.");
             insertInstruction(db, 32, 6, "4. Heat oil and butter in a cast iron skillet over medium heat. Fry coated chicken in the hot skillet until golden and cooked through, about 3 minutes per side.");
-            insertInstruction(db, 33, 6, "5. Mix sriracha and agave nectar together in a bowl; adjust heat level to suit your preference.");
-            insertInstruction(db, 34, 6, "6. Slice biscuits in half and place 1 piece of chicken on each bottom half. Place about 1 tablespoon sauce on each piece of chicken and top with the remaining biscuit halves.");
+            insertInstruction(db, 35, 6, "5. Mix sriracha and agave nectar together in a bowl; adjust heat level to suit your preference.");
+            insertInstruction(db, 36, 6, "6. Slice biscuits in half and place 1 piece of chicken on each bottom half. Place about 1 tablespoon sauce on each piece of chicken and top with the remaining biscuit halves.");
 
             //Instant Pot® Honey-Garlic Chicken
-            insertInstruction(db, 35,7, "1. Combine honey, soy sauce, garlic, ketchup, and sriracha sauce in a bowl; mix well and set aside.");
-            insertInstruction(db, 36, 7, "2. Place chicken pieces in a large bowl, add cornstarch, and toss to combine.");
-            insertInstruction(db, 37, 7, "3. Turn on a multi-functional pressure cooker (such as Instant Pot®) and select the Saute function. Add oil until hot. Add 1/2 the chicken and cook for 3 minutes. Flip and cook 2 more minutes. Transfer chicken to a plate and repeat with remaining chicken. Pour chicken broth into the empty Instant Pot® and cook for 2 minutes, scraping up the brown bits with a wooden spoon to deglaze the pot. Turn Instant Pot® off. Return chicken to the pot and pour honey mixture on top. Stir to coat with sauce.");
-            insertInstruction(db, 38, 7, "4. Close and lock the lid. Select high pressure according to manufacturer's instructions; set timer for 2 minutes. Allow 10 minutes for pressure to build.");
-            insertInstruction(db, 39, 7, "5. Release pressure carefully using the quick-release method according to manufacturer's instructions, about 5 minutes. Unlock and remove the lid. Serve chicken sprinkled with green onions and sesame seeds.");
+            insertInstruction(db, 37,7, "1. Combine honey, soy sauce, garlic, ketchup, and sriracha sauce in a bowl; mix well and set aside.");
+            insertInstruction(db, 38, 7, "2. Place chicken pieces in a large bowl, add cornstarch, and toss to combine.");
+            insertInstruction(db, 39, 7, "3. Turn on a multi-functional pressure cooker (such as Instant Pot®) and select the Saute function. Add oil until hot. Add 1/2 the chicken and cook for 3 minutes. Flip and cook 2 more minutes. Transfer chicken to a plate and repeat with remaining chicken. Pour chicken broth into the empty Instant Pot® and cook for 2 minutes, scraping up the brown bits with a wooden spoon to deglaze the pot. Turn Instant Pot® off. Return chicken to the pot and pour honey mixture on top. Stir to coat with sauce.");
+            insertInstruction(db, 40, 7, "4. Close and lock the lid. Select high pressure according to manufacturer's instructions; set timer for 2 minutes. Allow 10 minutes for pressure to build.");
+            insertInstruction(db, 41, 7, "5. Release pressure carefully using the quick-release method according to manufacturer's instructions, about 5 minutes. Unlock and remove the lid. Serve chicken sprinkled with green onions and sesame seeds.");
 
             //3-Ingredient Cheesecake
-            insertInstruction(db, 52, 8, "1. Preheat the oven to 350 degrees F (175 degrees C). Line the bottom of a 9-inch springform pan with parchment paper.");
-            insertInstruction(db, 53, 8, "2. Place white chocolate in top of a double boiler over simmering water. Stir frequently, scraping down the sides with a rubber spatula to avoid scorching, until chocolate is melted, about 5 minutes. Remove and allow to cool slightly. Mix in cream cheese and egg yolks.");
-            insertInstruction(db, 54, 8, "3. Beat egg whites in a large glass, metal, or ceramic bowl with an electric mixer until stiff peaks form. Fold in the cooled white chocolate mixture. Pour into the prepared springform pan.");
-            insertInstruction(db, 55, 8, "4. Bake in the preheated oven for 15 minutes. Reduce oven temperature to 300 degrees F (150 degrees C) and bake for an additional 15 minutes. Turn the oven off, leaving cheesecake inside for for a further 15 minutes.");
-            insertInstruction(db, 56, 8, "5. Remove cheesecake from the oven and allow to cool completely at room temperature, about 1 hour. Chill before serving, about 3 hours.");
+            insertInstruction(db, 42, 8, "1. Preheat the oven to 350 degrees F (175 degrees C). Line the bottom of a 9-inch springform pan with parchment paper.");
+            insertInstruction(db, 43, 8, "2. Place white chocolate in top of a double boiler over simmering water. Stir frequently, scraping down the sides with a rubber spatula to avoid scorching, until chocolate is melted, about 5 minutes. Remove and allow to cool slightly. Mix in cream cheese and egg yolks.");
+            insertInstruction(db, 44, 8, "3. Beat egg whites in a large glass, metal, or ceramic bowl with an electric mixer until stiff peaks form. Fold in the cooled white chocolate mixture. Pour into the prepared springform pan.");
+            insertInstruction(db, 45, 8, "4. Bake in the preheated oven for 15 minutes. Reduce oven temperature to 300 degrees F (150 degrees C) and bake for an additional 15 minutes. Turn the oven off, leaving cheesecake inside for for a further 15 minutes.");
+            insertInstruction(db, 46, 8, "5. Remove cheesecake from the oven and allow to cool completely at room temperature, about 1 hour. Chill before serving, about 3 hours.");
 
 
 

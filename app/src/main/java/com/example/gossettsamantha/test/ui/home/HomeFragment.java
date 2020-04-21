@@ -39,7 +39,8 @@ public class HomeFragment extends Fragment  {
     private Cursor ingCursor;
     private Cursor amountCursor;
     private Cursor recipeCursor;
-    private  double match;
+
+    private double match;
 
 
     private HomeViewModel homeViewModel;
@@ -50,6 +51,8 @@ public class HomeFragment extends Fragment  {
     private SQLiteDatabase db;
     private Cursor cursor;
     private  String[] thisMatch;
+
+    private ArrayList<Double> matchList;
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater,
@@ -63,10 +66,8 @@ public class HomeFragment extends Fragment  {
 
         SQLiteOpenHelper recipeDatabaseHelper = new RecipeDatabaseHelper(getContext());
 
-
-
-
         createRecipeEnteries();
+        //createMonstrosity();
 
         return root;
     }
@@ -126,6 +127,7 @@ public class HomeFragment extends Fragment  {
 
 
 
+
         linearLayoutManager = new LinearLayoutManager(getContext());
         adapter = new myAdapter(getContext(), list);
         recyclerView.setLayoutManager(linearLayoutManager);
@@ -150,6 +152,150 @@ public class HomeFragment extends Fragment  {
 
     }
 
+/*
+    private void createMonstrosity() {
+
+        String[] ingredients = new String[] {};
+
+        final List<String> ingredients_list = new ArrayList<String>(Arrays.asList(ingredients));
+
+        Cursor cursor2 = db.query("DRINK",
+                new String[]{"_id", "ID"},
+                null, null, null, null, null);
+
+        int idColumn = cursor.getColumnIndex("ID");
+
+        ingrRecCursor = db.query("INGREDIENT_RECIPE",
+                new String[]{"INGREDIENT_ID", "RECIPE_ID", "AMOUNT_ID"},
+                null,
+                null,
+                null, null, null);
+
+        int ingRecId = ingrRecCursor.getColumnIndex("INGREDIENT_ID");
+        int recId = ingrRecCursor.getColumnIndex("RECIPE_ID");
+        int inReAmountId = ingrRecCursor.getColumnIndex("AMOUNT_ID");
+
+        ingCursor = db.query("INGREDIENT",
+                new String[]{"INGREDIENT_ID", "INGREDIENTNAME", "USER_OWNS"},
+                null,
+                null,
+                null, null, null);
+
+        int userOwns = ingCursor.getColumnIndex("USER_OWNS");
+        int ingId = ingCursor.getColumnIndex("INGREDIENT_ID");
+        int ingredient = ingCursor.getColumnIndex("INGREDIENTNAME");
+
+        amountCursor = db.query("AMOUNT",
+                new String[]{"AMOUNT_ID", "AMOUNT"},
+                null,
+                null,
+                null, null, null);
+
+        int amountId = amountCursor.getColumnIndex("AMOUNT_ID");
+        int amount = amountCursor.getColumnIndex("AMOUNT");
+
+
+        double ingredientTotal = 0;
+        double ingredientOwned = 0;
+        try {
+            if (cursor2 != null && cursor2.moveToFirst()) {
+                //get columns
+
+
+                do {
+
+                    if (ingrRecCursor != null && ingrRecCursor.moveToFirst()) {
+                        //get columns
+
+                        do {
+                            if(cursor2.getInt(idColumn) == ingrRecCursor.getInt(recId) ) {
+
+                                if (ingCursor != null && ingCursor.moveToFirst()) {
+
+
+                                    do {
+
+                                        if((ingrRecCursor.getInt(ingRecId) == ingCursor.getInt(ingId)) ) {
+
+                                            if (amountCursor != null && amountCursor.moveToFirst()) {
+
+                                                do {
+                                                    int i = 0;
+
+                                                    if ((ingrRecCursor.getInt(inReAmountId) == amountCursor.getInt(amountId))) {
+
+
+                                                        //ingr[i] =  amountCursor.getString(amount)  + " " + ingCursor.getString(ingredient);
+
+                                                        //ingredients_list.add(ingr[i]);
+                                                        i++;
+
+                                                        ingredientTotal++;
+
+
+                                                    }
+
+
+                                                }while( amountCursor.moveToNext());
+                                            }
+
+
+                                            if (ingCursor.getInt(userOwns) == 1 ) {
+
+                                                ingredientOwned++;
+                                            }
+
+                                            //Toast.makeText(this, "match = " + match + " = " + ingredientOwned + " / " +ingredientTotal  ,Toast.LENGTH_SHORT).show();
+
+                                            match = ingredientOwned/ingredientTotal;
+                                            match = match*100;
+                                            //Toast.makeText(getContext(), "  " +match + " " + ingrRecCursor.getInt(recId) ,Toast.LENGTH_SHORT).show();
+
+                                            db.execSQL("UPDATE DRINK SET MATCH_PERCENTAGE = " + match + " WHERE ID = "+  ingrRecCursor.getInt(recId)  );
+
+
+
+                                        }
+                                        //Toast.makeText(getContext(),  " " + ingrRecCursor.getInt(recId) + " " + recipeId ,Toast.LENGTH_SHORT).show();
+
+                                    } while (ingCursor.moveToNext());
+
+                                }
+
+                            }
+                        }
+
+                        while (ingrRecCursor.moveToNext());
+
+
+                        ingrRecCursor.close();
+
+
+                    }
+
+                    match = ingredientOwned/ingredientTotal;
+                    match = match*100;
+
+                    //Toast.makeText(this, "match = " + match + " = " + ingredientOwned + " / " +ingredientTotal  ,Toast.LENGTH_SHORT).show();
+
+
+
+
+                }
+                while (cursor.moveToNext());
+
+                cursor.close();
+
+            }
+        }catch(SQLiteException e) {
+            Toast toast = Toast.makeText(getContext(), "SQLiteException for monstrosity db", Toast.LENGTH_SHORT);
+            toast.show();
+        }
+
+    }
+
+
+ */
 
     @Override
     public void onDestroy(){

@@ -69,17 +69,6 @@ public class RecipeActivity extends Activity {
 
     }
 
-public void onBackPressed() {
-    super.onBackPressed();
-
-    Intent intent = new Intent(this, HomeFragment.class);
-    intent.putExtra(RecipeActivity.EXTRA_RECIPEMATCH, thisMatch);
-    startActivity(intent);
-    Toast.makeText(this, "backpressed" ,Toast.LENGTH_SHORT).show();
-
-    finish();
-
-}
 
     private void createIngredientsList() {
 
@@ -132,68 +121,41 @@ public void onBackPressed() {
 
             if (ingrRecCursor != null && ingrRecCursor.moveToFirst()) {
                 //get columns
-
                 do {
                     if(((Integer) getIntent().getExtras().get(EXTRA_RECIPEID) == ingrRecCursor.getInt(recId)) ) {
-
                         if (ingCursor != null && ingCursor.moveToFirst()) {
-
-
                             do {
-
                                 if((ingrRecCursor.getInt(ingRecId) == ingCursor.getInt(ingId)) ) {
-
                                     if (amountCursor != null && amountCursor.moveToFirst()) {
-
                                         do {
                                             int i = 0;
 
                                             if ((ingrRecCursor.getInt(inReAmountId) == amountCursor.getInt(amountId))) {
 
-
                                                 ingr[i] =  amountCursor.getString(amount)  + " " + ingCursor.getString(ingredient);
-
                                                 ingredients_list.add(ingr[i]);
                                                 i++;
-
                                                 ingredientTotal++;
-
-
                                             }
-
-
                                         }while( amountCursor.moveToNext());
                                     }
-
-
                                     if (ingCursor.getInt(userOwns) == 1 ) {
-
                                         ingredientOwned++;
                                     }
-
                                     //Toast.makeText(this, "match = " + match + " = " + ingredientOwned + " / " +ingredientTotal  ,Toast.LENGTH_SHORT).show();
-
                                     match = ingredientOwned/ingredientTotal;
                                     match = match*100;
                                     db.execSQL("UPDATE DRINK SET MATCH_PERCENTAGE = " + match + " WHERE ID = "+  ingrRecCursor.getInt(recId)  );
-
-
-
                                 }
                                 //Toast.makeText(this,  " " + ingrRecCursor.getInt(recId) + " " + recipeId ,Toast.LENGTH_SHORT).show();
-
                             } while (ingCursor.moveToNext());
-
                         }
-
                     }
                 }
 
                 while (ingrRecCursor.moveToNext());
 
-
                 ingrRecCursor.close();
-
 
             }
 
@@ -210,11 +172,6 @@ public void onBackPressed() {
         }
 
         //String matchId = (String) getIntent().getExtras().get(EXTRA_RECIPEMATCH);
-
-
-
-
-
 
         final ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>
                 (this, android.R.layout.simple_list_item_1, ingredients_list);

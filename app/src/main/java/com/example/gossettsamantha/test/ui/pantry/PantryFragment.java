@@ -136,7 +136,7 @@ public class PantryFragment extends Fragment {
                         checkBox[i].setId(i);
                         arrayList.add((String) checkBox[i].getText());
                         radioGroup.addView(checkBox[i]);
-                        //Toast.makeText(getContext(), "if this wokrs ur big brain " , Toast.LENGTH_SHORT).show();
+                        //Toast.makeText(getContext(), "if this works ur big brain " , Toast.LENGTH_SHORT).show();
                         checkBox[i].setChecked(true);
 
                     }
@@ -163,14 +163,13 @@ public class PantryFragment extends Fragment {
         public void updateIngredients() {
 
             arrayList.clear();
-
+            db.execSQL("UPDATE INGREDIENT SET USER_OWNS='0' ");
 
             if (ingCursor != null && ingCursor.moveToFirst()) {
 
                 int x = 0;
                 do {
                         if( ( checkBox[x].isChecked() ) && ( arrayList.contains((String) checkBox[x].getText()) != true)  ) {
-
 
                             db.execSQL("UPDATE INGREDIENT SET USER_OWNS='1' WHERE INGREDIENT_ID = "+ ingCursor.getInt(ingId)  );
                             arrayList.add((String) checkBox[x].getText());
