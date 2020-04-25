@@ -34,47 +34,7 @@ public class MainActivity extends AppCompatActivity {
         getSupportActionBar().hide();
     }
 
-
-/*
-    public void onClicked(View view) {
-        ImageButton image1 = (ImageButton) findViewById(R.id.imageButton2);
-        Toast.makeText(MainActivity.this, "recipe page for item " + image1.getId() + " will pop up." ,Toast.LENGTH_SHORT).show();
-    }
-
-    public void onClicked2(View view) {
-        ImageButton image2 = (ImageButton) findViewById(R.id.imageButton6);
-        Toast.makeText(MainActivity.this, "recipe page for item " + image2.getId() + " will pop up.",Toast.LENGTH_SHORT).show();
-    }
-
-    public void onClicked14(View view) {
-        ImageButton image3 = (ImageButton) findViewById(R.id.imageButton14);
-        Toast.makeText(MainActivity.this, "recipe page for item " + image3.getId() + " will pop up.",Toast.LENGTH_SHORT).show();
-    }
-*/
-/*
-    public void recRec(View view) {
-        Toast.makeText(MainActivity.this, "recommended recipes page will pop up.",Toast.LENGTH_SHORT).show();
-    }
-
-
-    public void favRec(View view) {
-        Toast.makeText(MainActivity.this, "favorite recipes page will pop up.",Toast.LENGTH_SHORT).show();
-
-    }
-
-    public void bookRec(View view) {
-        Toast.makeText(MainActivity.this, "bookmarked recipe page will pop up.",Toast.LENGTH_SHORT).show();
-
-    }
-
-
-
- */
-    public void yourRec(View v) {
-        Toast.makeText(MainActivity.this, "Recipe page for this item will pop up.",Toast.LENGTH_SHORT).show();
-
-        }
-    }
+}
 
 
 
